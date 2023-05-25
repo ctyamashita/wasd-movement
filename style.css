@@ -1,0 +1,107 @@
+body {
+  padding: 0;
+  margin: 0;
+  background: lightblue;
+}
+
+table {
+  height: 100vh;
+  width: 100vh;
+  margin: 0 auto;
+  background: radial-gradient(beige, wheat);
+  transform: scale(.5) scaleY(.5) skew(45deg, -45deg);
+  box-shadow: -30px 30px 35px 0px rgba(0,0,0,0.4), -45px 45px 196px 101px rgba(0,0,0,0.2);
+}
+
+td {
+  border: solid 1px rgba(0,0,0,.2);
+  border-radius: 1vh;
+}
+
+td > div {
+  height: 50%;
+  width: 50%;
+  margin: 0 auto;
+  transform: skew(45deg, -45deg) scaleX(2);
+}
+
+td:has(.player) {
+  background: radial-gradient(rgba(0,0,0,0.3), transparent 50%);
+  outline: solid 8px salmon;
+  outline-offset: -16px;
+  border-radius: 30%;
+  animation-name: idle-shadow;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+td:has(.place) {
+  background: radial-gradient(white 5%, rgba(255,255,255,0.3) 28%, rgba(0,0,0,.1) 70%);
+  outline: solid 8px white;
+  outline-offset: -8px;
+}
+
+.player {
+  background: radial-gradient(yellow 20%, yellowgreen 58%, white);
+  border-radius: 50%;
+  transform: skew(45deg, -45deg) scaleX(2) translateX(70%);
+  box-shadow: 0 0 5px 2px rgba(0,0,0,.3), 5px 0px 9px 5px rgba(255,255,255,.3);
+  animation-name: idle !important;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+
+@keyframes idle {
+  0% {transform: skew(45deg, -45deg) scaleX(2) translateX(70%);}
+  50% {transform: skew(45deg, -45deg) scaleX(2) translateX(60%);}
+  100% {transform: skew(45deg, -45deg) scaleX(2) translateX(70%);}
+}
+
+@keyframes idle-shadow {
+  0% {background: radial-gradient(rgba(0,0,0,0.2), transparent 50%)}
+  5% {background: radial-gradient(rgba(0,0,0,0.22), transparent 50%)}
+  10% {background: radial-gradient(rgba(0,0,0,0.24), transparent 50%)}
+  15% {background: radial-gradient(rgba(0,0,0,0.26), transparent 50%)}
+  20% {background: radial-gradient(rgba(0,0,0,0.28), transparent 50%)}
+  25% {background: radial-gradient(rgba(0,0,0,0.3), transparent 50%)}
+  30% {background: radial-gradient(rgba(0,0,0,0.32), transparent 50%)}
+  35% {background: radial-gradient(rgba(0,0,0,0.34), transparent 50%)}
+  40% {background: radial-gradient(rgba(0,0,0,0.36), transparent 50%)}
+  45% {background: radial-gradient(rgba(0,0,0,0.38), transparent 50%)}
+  50% {background: radial-gradient(rgba(0,0,0,0.4), transparent 50%)}
+  55% {background: radial-gradient(rgba(0,0,0,0.38), transparent 50%)}
+  60% {background: radial-gradient(rgba(0,0,0,0.36), transparent 50%)}
+  65% {background: radial-gradient(rgba(0,0,0,0.34), transparent 50%)}
+  70% {background: radial-gradient(rgba(0,0,0,0.32), transparent 50%)}
+  75% {background: radial-gradient(rgba(0,0,0,0.3), transparent 50%)}
+  80% {background: radial-gradient(rgba(0,0,0,0.28), transparent 50%)}
+  85% {background: radial-gradient(rgba(0,0,0,0.26), transparent 50%)}
+  90% {background: radial-gradient(rgba(0,0,0,0.24), transparent 50%)}
+  95% {background: radial-gradient(rgba(0,0,0,0.22), transparent 50%)}
+  100% {background: radial-gradient(rgba(0,0,0,0.2), transparent 50%)}
+}
+
+.place {
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 0 8px yellow, -6px 0px 20px 16px gold;
+  transform: skew(45deg, -45deg) scaleX(2) scale(.4) translateX(150%);
+  animation-name: place-idle;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes place-idle {
+  0% {transform: skew(45deg, -45deg) scaleX(2) scale(.4) translateX(150%);}
+  50% {transform: skew(45deg, -45deg) scaleX(2) scale(.35) translateX(150%);}
+  100% {transform: skew(45deg, -45deg) scaleX(2) scale(.4) translateX(150%);}
+}
+
+.place.player {
+  box-shadow: 0 0 18px 5px white;
+}
+
+td:has(.place.player) {
+  outline: solid 0 transparent;
+  transition: .3s;
+}
