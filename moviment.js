@@ -64,11 +64,24 @@ const walkableTile = (x,y) => {
 }
 
 // list of objects
-const objects = ['player', 'place', 'blocked', 'blocked', 'box', 'box', 'carpet', 'carpet'];
+// const objects = ['player', 'place', 'blocked', 'blocked', 'box', 'box', 'carpet', 'carpet', 'carpet', 'carpet', 'carpet', 'carpet', 'carpet', 'carpet'];
+
+const obj = {
+  'player': 1,
+  'place': 3,
+  'blocked': 3,
+  'box': 4,
+  'carpet': 6
+}
 
 // check if number of objects is valid
-objects.length >= (width * height) ? alert('Too many objects!') : objects.forEach((obj) => addToBoard(obj));
+// objects.length >= (width * height) ? alert('Too many objects!') : objects.forEach((obj) => addToBoard(obj));
 
+for (const [key,value] of Object.entries(obj)) {
+  for (let times = 0; times < value; times++) {
+    addToBoard(key);
+  }
+}
 
 // Controls
 document.addEventListener('keyup', (e) => {

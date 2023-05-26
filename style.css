@@ -49,10 +49,7 @@ td:has(.player) {
 }
 td:has(.place) {
   background: radial-gradient(white 5%, rgba(255,255,255,0.3) 28%, transparent 70%);
-  outline: solid 8px white;
-  border-radius: 50%;
   border: none;
-  outline-offset: -3vw;
 }
 
 .board-container {
@@ -70,11 +67,13 @@ td:has(.place) {
 .player {
   background: radial-gradient(yellow 20%, yellowgreen 58%, white);
   border-radius: 50%;
+  outline: solid 0.4vw rgba(0,0,0,.3);
   transform: skew(45deg, -45deg) scaleX(1) translateX(70%);
   box-shadow: 0 0 5px 2px rgba(0,0,0,.3), 5px 0px 9px 5px rgba(255,255,255,.3);
   animation-name: idle !important;
   animation-duration: 4s;
   animation-iteration-count: infinite;
+  mix-blend-mode: darken;
 }
 
 
@@ -126,6 +125,8 @@ td:has(.place) {
 
 .place.player {
   box-shadow: 0 0 18px 5px white;
+  mix-blend-mode: normal;
+  outline: none;
 }
 
 td:has(.place.player) {
@@ -198,7 +199,7 @@ td:has(.blocked) {
   transform: translateX(50%);
   top: -100%;
   right: -50%;
-  background: gold;
+  background: mediumpurple;
   outline: solid 8px floralwhite;
   outline-offset: -4px;
   border-radius: 8px;
@@ -218,5 +219,6 @@ td:has(.carpet) {
   top: 0;
   position: absolute;
   transform: revert;
-  background: cornflowerblue;
+  background: orange;
+  mix-blend-mode: color-burn;
 }
