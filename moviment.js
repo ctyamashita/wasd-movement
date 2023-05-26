@@ -1,40 +1,90 @@
 // Board Size
-const [width, height] = [100,100]
+const [width, height] = [5,5]
 
 const board = document.createElement('table');
 
-for (let y = 1; y <= width; y++) {
+for (let y = 1; y <= height; y++) {
   const row = document.createElement('tr');
+  const fixedY = 1 + height - y
 
   for (let x = 1; x <= width; x++) {
     const tile = document.createElement('td');
     const container = document.createElement('div');
-    container.setAttribute('class', `coord-${x}-${y} ${x == 1 && y == 10 ? 'player' : ''}`);
+    const fixedX = 1 + width - x;
+    container.setAttribute('class', `coord-${fixedX}-${fixedY}`);
+    tile.style.order = (width + height) - y - x;
     tile.append(container);
     row.append(tile);
   }
   board.append(row)
 }
-document.body.append(board)
+const boardContainer = document.createElement('div');
+boardContainer.classList.add('board-container');
+boardContainer.append(board);
+document.body.append(boardContainer);
 
-const allTiles = document.querySelectorAll('td');
+// All tiles
+let availableTiles = Array.from(document.querySelectorAll('td'));
 
-const randomPlace = allTiles[Math.floor(Math.random() * allTiles.length)]
-// randomPlace.classList.add('place')
-randomPlace.firstChild.classList.add('place')
+// Add object to board at random location
+
+// Helper
+const addToBoard = (string) => {
+  const index = Math.floor(Math.random() * availableTiles.length);
+  const randomCoord = availableTiles.splice(index, 1);
+  const objEl = randomCoord[0].firstChild
+  objEl.classList.add(string);
+  if (string == 'place') {
+    const bubble = document.createElement('div');
+    bubble.classList.add('bubble');
+    bubble.innerHTML = 'Bubble test.'
+    objEl.append(bubble);
+    objEl.onclick = () => { console.log('click')}
+  } else if (string == 'box') {
+    const wallLeft = document.createElement('div');
+    const wallRight = document.createElement('div');
+    const boxCeiling = document.createElement('div');
+    wallLeft.classList.add('l-wall');
+    wallRight.classList.add('r-wall');
+    boxCeiling.classList.add('ceiling-box');
+    objEl.parentElement.append(boxCeiling);
+    objEl.append(wallLeft);
+    objEl.append(wallRight);
+  } else if (string == 'carpet') {
+    objEl.classList.remove(string);
+    const carpet = document.createElement('div');
+    carpet.classList.add('carpet');
+    objEl.parentElement.append(carpet);
+  }
+}
+
+const walkableTile = (x,y) => {
+  const tile = document.querySelector(`.coord-${x}-${y}`)
+  return !tile.classList.contains('blocked') && !tile.classList.contains('box')
+}
+
+// list of objects
+const objects = ['player', 'place', 'blocked', 'blocked', 'box', 'box', 'carpet', 'carpet'];
+
+// check if number of objects is valid
+objects.length >= (width * height) ? alert('Too many objects!') : objects.forEach((obj) => addToBoard(obj));
+
 
 // Controls
 document.addEventListener('keyup', (e) => {
   const currentPosition = document.querySelector('.player');
   let [x, y] = currentPosition.classList[0].split('-').slice(1).map(num => Number(num));
-  if (e.key == 'Enter') currentPosition.click();
 
+  // click if enter or space
+  if (e.key == 'Enter' || e.code == 'Enter' || e.key == ' ' || e.code == 'Space' ) currentPosition.click();
+
+  // check if it's allowed to move to coord
   if (x >= 1 && x <= width && y >= 1 && y <= height) {
     currentPosition.classList.remove('player');
-    if (e.key == 's' && y < height) y += 1
-    if (e.key == 'w' && y > 1) y -= 1
-    if (e.key == 'a' && x > 1) x -= 1
-    if (e.key == 'd' && x < width) x += 1
+    if ((e.key == 'w' || e.key == 'ArrowUp') && y < height && walkableTile(x, y + 1)) y += 1
+    if ((e.key == 's' || e.key == 'ArrowDown') && y > 1  && walkableTile(x, y - 1)) y -= 1
+    if ((e.key == 'a' || e.key == 'ArrowLeft') && x > 1  && walkableTile(x - 1, y)) x -= 1
+    if ((e.key == 'd' || e.key == 'ArrowRight') && x < width  && walkableTile(x + 1, y)) x += 1
     document.querySelector(`.coord-${x}-${y}`).classList.add('player');
   }
 });
