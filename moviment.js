@@ -63,6 +63,7 @@ modeBtn.onclick = () => {
   places.forEach(place => {
     place.parentElement.style.background = 'transparent';
     place.style.opacity = 0;
+    place.nextElementSibling.style.opacity = 0;
   });
   setTimeout(() => {
     player.parentElement.style.opacity = 1;
@@ -70,6 +71,7 @@ modeBtn.onclick = () => {
     places.forEach(place => {
       place.parentElement.style.background = 'radial-gradient(white 5%, rgba(255,255,255,0.3) 28%, transparent 70%)';
       place.style.opacity = 1;
+      place.nextElementSibling.style.opacity = 1;
     });
   }, 2700);
 };
@@ -127,19 +129,21 @@ const generateBoard = () => {
 // Add object to board at random location
 
 // Helper
-const addToBoard = (string) => {
+const addToBoard = (thing) => {
   const index = Math.floor(Math.random() * availableTiles.length);
   let randomCoord = availableTiles.splice(index, 1);
-  if (!randomCoord) randomCoord = [availableTiles.pop()];
+  console.log(randomCoord, availableTiles);
+  // if (randomCoord.length == 0) randomCoord = [availableTiles.pop()];
+
   const objEl = randomCoord[0].firstChild
-  objEl.classList.add(string);
-  if (string == 'place') {
-    const bubble = document.createElement('div');
+  objEl.classList.add(thing);
+  if (thing == 'place') {
+    const bubble = document.createElement('a');
     bubble.classList.add('bubble');
     bubble.innerHTML = 'Bubble test.'
-    objEl.append(bubble);
-    objEl.onclick = () => { console.log('click')}
-  } else if (string == 'box') {
+    objEl.parentElement.append(bubble);
+    objEl.onclick = () => { console.log('click') };
+  } else if (thing == 'box') {
     const wallLeft = document.createElement('div');
     const wallRight = document.createElement('div');
     const boxCeiling = document.createElement('div');
@@ -149,8 +153,8 @@ const addToBoard = (string) => {
     objEl.parentElement.append(boxCeiling);
     objEl.append(wallLeft);
     objEl.append(wallRight);
-  } else if (string == 'carpet') {
-    objEl.classList.remove(string);
+  } else if (thing == 'carpet') {
+    objEl.classList.remove(thing);
     const carpet = document.createElement('div');
     carpet.classList.add('carpet');
     objEl.parentElement.append(carpet);
@@ -171,7 +175,7 @@ const updateBoard = () => {
   mode = localStorage.getItem("mode");
   if (mode == '2D') newBoard.classList.add('flat');
   for (const [key,value] of Object.entries(obj)) {
-    if (key !== 'height' || key !== 'width') {
+    if (!(key === 'height' || key === 'width')) {
       for (let times = 0; times < value; times++) {
         addToBoard(key);
       }
