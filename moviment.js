@@ -11,7 +11,7 @@ const obj = {
 }
 
 // Board Size
-let [width, height] = [obj['width'], obj['height']];
+// let [height, width] = [obj['width'], obj['height']];
 
 let availableTiles;
 
@@ -33,12 +33,7 @@ const addInputs = (type, quantity) => {
   typeInput.value = quantity
   typeInput.type = 'number';
   typeInput.onchange = () => {
-    const newValue =  document.querySelector(`#${type}`).value;
-    if (type == 'width') {
-      width = newValue;
-    } else if (type == 'height') {
-      height = newValue;
-    }
+    const newValue =  Number(document.querySelector(`#${type}`).value);
     obj[type] = newValue;
     updateBoard();
   }
@@ -93,22 +88,24 @@ document.body.append(modeBtn);
 
 const generateBoard = () => {
   const board = document.createElement('table');
+  const height = obj['height'];
+  const width = obj['width'];
 
-  for (let y = 1; y <= width; y++) {
+  for (let y = 1; y <= height; y++) {
     const row = document.createElement('tr');
-    const fixedY = 1 + width - y
+    const fixedY = 1 + height - y
 
-    for (let x = 1; x <= height; x++) {
+    for (let x = 1; x <= width; x++) {
       const tile = document.createElement('td');
       if (window.screen.height < window.screen.width) {
         tile.style.width = `${80/width}vh`
         tile.style.height = `${80/width}vh`
       } else {
-        tile.style.width = `${80/width}vw`
-        tile.style.height = `${80/width}vw`
+        tile.style.width = `${80/height}vw`
+        tile.style.height = `${80/height}vw`
       }
       const container = document.createElement('div');
-      const fixedX = 1 + height - x;
+      const fixedX = 1 + width - x;
       container.setAttribute('class', `coord-${fixedX}-${fixedY}`);
       tile.style.order = (width + height) - y - x;
       tile.append(container);
@@ -194,6 +191,8 @@ for (const [key,value] of Object.entries(obj)) {
 document.addEventListener('keyup', (e) => {
   const currentPosition = document.querySelector('.player');
   let [x, y] = currentPosition.classList[0].split('-').slice(1).map(num => Number(num));
+  const height = obj['height'];
+  const width = obj['width'];
 
   // click if enter or space
   if (e.key == 'Enter' || e.code == 'Enter' || e.key == ' ' || e.code == 'Space' ) currentPosition.click();
