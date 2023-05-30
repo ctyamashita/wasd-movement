@@ -3,15 +3,13 @@ body {
   margin: 0;
   background: lightblue;
   font-family: monospace;
+  display: flex;
+  align-items: center;
 }
 
 table {
   display: flex;
   flex-direction: column;
-  /* height: 90vw;
-  width: 90vw;
-  max-width: 100vh;
-  max-height: 100vh; */
   background: radial-gradient(beige, wheat);
   transform: scale(.5) scaleY(.5) skew(45deg, -45deg);
   box-shadow: 0 0 0 1vw white, -8vw 8vw 0px 0 rgba(0,0,0,0.4), -12vw 12vw 16vw 10vw rgba(0,0,0,0.2);
@@ -40,7 +38,7 @@ td > div {
 
 td:has(.player) {
   background: radial-gradient(rgba(0,0,0,0.3), transparent 50%);
-  outline: solid 1vh darksalmon;
+  outline: solid .7vw darksalmon;
   outline-offset: -2vw;
   border-radius: 30%;
   animation-name: idle-shadow;
@@ -60,6 +58,7 @@ td:has(.place) {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  width: 100vw;
 }
 
 .player, .place {
@@ -121,7 +120,7 @@ td:has(.place) {
   transition: 3s;
 }
 
-.flat .blocked {
+.flat .disk {
   box-shadow: -15px 15px 2vw 0vw rgba(0,0,0,.3);
   transform: scale(.8);
   transition: 3s;
@@ -238,6 +237,7 @@ td:has(.place.player) {
   position: absolute;
   display: none;
   min-width: min-content;
+  height: fit-content;
   opacity: 0;
   bottom: 175%;
   right: -150%;
@@ -246,6 +246,45 @@ td:has(.place.player) {
   box-shadow: -6px 6px 0px -1px rgba(0,0,0,0.3);
   border-radius: 12px 12px 12px 0px;
   padding: 8px 16px;
+}
+
+.modal {
+  z-index: 999;
+  background-color: aliceblue;
+  margin: 15%;
+  display: none;
+  border-radius: 12px;
+  height: 0;
+  width: 0;
+  transition: .3s;
+}
+
+.modal.expand {
+  display: block;
+  position: absolute;
+  height: 70vh;
+  width: 70vw;
+  animation: show .3s;
+  transition:.3s;
+}
+
+.bg {
+  display: none;
+  z-index: 998;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,.7);
+}
+
+body:has(.modal.expand) .bg {
+  display: block;
+}
+
+body:has(.modal.expand) .bubble {
+  opacity: 0 !important;
 }
 
 td:has(.place.player) .bubble {
@@ -260,7 +299,7 @@ td:has(.place.player) .bubble {
   animation: flat-bubble-idle 3s infinite !important;
 }
 
-.blocked {
+.disk {
   position: relative;
   transform: scale(.8) translate(5vw, -5vw);
   border-radius: 50%;
@@ -274,7 +313,7 @@ td:has(.place.player) .bubble {
   transition: 3s;
 }
 
-td:has(.blocked) {
+td:has(.disk) {
   /* background: radial-gradient(black, transparent 70%); */
 }
 
@@ -345,10 +384,10 @@ td:has(.carpet) {
 }
 
 .mode {
-  z-index: 999;
+  z-index: 2;
   position: fixed;
-  top: 0;
-  right: 5vw;
+  top: 24px;
+  right: 32px;
   font-family: inherit;
   color: white;
   font-weight: 900;
@@ -372,9 +411,7 @@ td:has(.carpet) {
   display: flex;
   align-items: center;
   justify-content: center;
-  outline: solid 4px lightblue;
-  outline-offset: -2px;
-  border-radius: 4px;
+  box-shadow: 0 0 0 2px lightblue;
 }
 
 .box-left-btn {
@@ -403,16 +440,14 @@ td:has(.carpet) {
   transform: rotate(-45deg) skew(15deg, 15deg);
   background: white;
   cursor: pointer !important;
-  outline: solid 6px lightblue;
-  outline-offset: -3px;
-  border-radius: 4px;
+  box-shadow: 0 0 0 4px lightblue;
   transition: 3s;
 }
 
 .flat .box-left-btn {
   transition: 3s, height 2s .2s;
   width: 0;
-  height: 7.8vw;
+  height: 40px;
 }
 
 .flat .box-right-btn {
@@ -438,13 +473,18 @@ td:has(.carpet) {
 }
 
 .input-container {
-  display: inline-grid;
-  gap: 1vw;
   position: fixed;
   top: 2vw;
   left: 2vw;
+  background-color: white;
+  padding: 12px;
+}
+
+.inputs {
+  display: inline-grid;
+  gap: 1vw;
 }
 
 .input-container input {
-  width: 30%;
+  max-width: 70px;
 }

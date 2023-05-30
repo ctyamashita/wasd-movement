@@ -5,7 +5,7 @@ const obj = {
   'height': 5,
   'width': 5,
   'place': 2,
-  'blocked': 2,
+  'disk': 2,
   'box': 4,
   'carpet': 2
 }
@@ -23,6 +23,8 @@ const modeBtnRight = document.createElement('div');
 
 const inputContainer = document.createElement('div');
 inputContainer.classList.add('input-container');
+const inputs = document.createElement('div');
+inputs.classList.add('inputs');
 
 const addInputs = (type, quantity) => {
   const typeInput = document.createElement('input');
@@ -37,13 +39,15 @@ const addInputs = (type, quantity) => {
     obj[type] = newValue;
     updateBoard();
   }
-  inputContainer.append(typeLabel);
-  inputContainer.append(typeInput);
+
+  inputs.append(typeLabel);
+  inputs.append(typeInput);
 }
 
+inputContainer.append(inputs);
 document.body.append(inputContainer);
 
-
+// Mode button
 modeBtn.classList.add('mode');
 if (mode == '2D') modeBtn.classList.add('flat');
 modeBtnRight.innerText = mode == '3D' ? '3D' : '2D'
@@ -88,6 +92,11 @@ modeBtn.append(sideContainer);
 
 document.body.append(modeBtn);
 
+//bg modal
+const bg = document.createElement('div');
+bg.classList.add('bg');
+document.body.append(bg);
+
 const generateBoard = () => {
   const board = document.createElement('table');
   const height = obj['height'];
@@ -126,23 +135,44 @@ const generateBoard = () => {
   addToBoard('player');
 }
 
+window.onresize = () => {
+  const tiles = document.querySelectorAll('td');
+  const height = obj['height'];
+  const width = obj['width'];
+  if (window.innerHeight < window.innerWidth) {
+    tiles.forEach((tile) => {
+      tile.style.width = `${80/width}vh`
+      tile.style.height = `${80/width}vh`
+    })
+  } else {
+    tiles.forEach((tile) => {
+      tile.style.width = `${80/height}vw`
+      tile.style.height = `${80/height}vw`
+    })
+  }
+}
+
 // Add object to board at random location
 
 // Helper
 const addToBoard = (thing) => {
   const index = Math.floor(Math.random() * availableTiles.length);
   let randomCoord = availableTiles.splice(index, 1);
-  console.log(randomCoord, availableTiles);
+  // console.log(randomCoord, availableTiles);
   // if (randomCoord.length == 0) randomCoord = [availableTiles.pop()];
 
   const objEl = randomCoord[0].firstChild
   objEl.classList.add(thing);
   if (thing == 'place') {
-    const bubble = document.createElement('a');
+    const bubble = document.createElement('div');
     bubble.classList.add('bubble');
-    bubble.innerHTML = 'Bubble test.'
+    bubble.innerHTML = 'Bubble test';
     objEl.parentElement.append(bubble);
-    objEl.onclick = () => { console.log('click') };
+    const modal = document.createElement('div');
+    modal.classList.add(objEl.classList[0].replace('coord-',''));
+    modal.classList.add('modal');
+    document.body.append(modal);
+    bubble.onclick = () => { modal.classList.toggle('expand') };
   } else if (thing == 'box') {
     const wallLeft = document.createElement('div');
     const wallRight = document.createElement('div');
@@ -163,7 +193,7 @@ const addToBoard = (thing) => {
 
 const walkableTile = (x,y) => {
   const tile = document.querySelector(`.coord-${x}-${y}`)
-  return !tile.classList.contains('blocked') && !tile.classList.contains('box')
+  return !tile.classList.contains('disk') && !tile.classList.contains('box')
 }
 
 const updateBoard = () => {
@@ -198,16 +228,22 @@ document.addEventListener('keyup', (e) => {
   const height = obj['height'];
   const width = obj['width'];
 
-  // click if enter or space
-  if (e.key == 'Enter' || e.code == 'Enter' || e.key == ' ' || e.code == 'Space' ) currentPosition.click();
+  if (currentPosition.classList.contains('place')) {
+    // click if enter or space
+    if (e.key == 'Enter' || e.code == 'Enter' || e.key == ' ' || e.code == 'Space' ) {
+      currentPosition.nextElementSibling.click();
+    } else if (['w', 'ArrowUp','s', 'ArrowDown','a', 'ArrowLeft','d', 'ArrowRight', 'Escape'].includes(e.key)) {
+      document.querySelectorAll(`.modal`).forEach(modal => modal.classList.remove('expand'));
+    }
+  }
 
   // check if it's allowed to move to coord
-  if (x >= 1 && x <= width && y >= 1 && y <= height) {
+  if (x >= 1 && x <= width && y >= 1 && y <= height && document.activeElement.tagName != "INPUT") {
     currentPosition.classList.remove('player');
-    if ((e.key == 'w' || e.key == 'ArrowUp') && y < height && walkableTile(x, y + 1)) y += 1
-    if ((e.key == 's' || e.key == 'ArrowDown') && y > 1  && walkableTile(x, y - 1)) y -= 1
-    if ((e.key == 'a' || e.key == 'ArrowLeft') && x > 1  && walkableTile(x - 1, y)) x -= 1
-    if ((e.key == 'd' || e.key == 'ArrowRight') && x < width  && walkableTile(x + 1, y)) x += 1
+    if (['w', 'ArrowUp'].includes(e.key) && y < height && walkableTile(x, y + 1)) y += 1
+    if (['s', 'ArrowDown'].includes(e.key) && y > 1  && walkableTile(x, y - 1)) y -= 1
+    if (['a', 'ArrowLeft'].includes(e.key) && x > 1  && walkableTile(x - 1, y)) x -= 1
+    if (['d', 'ArrowRight'].includes(e.key) && x < width  && walkableTile(x + 1, y)) x += 1
     document.querySelector(`.coord-${x}-${y}`).classList.add('player');
   }
 });
