@@ -87,7 +87,7 @@ td:has(.place) {
   transform: scale(.8) scaleY(1) skew(0deg);
   scale: .8;
   transition: 3s;
-  box-shadow: 0 0 0 1vw white, -4vw 4vw 0px 0 rgba(0,0,0,0.4), -12vw 12vw 16vw 10vw rgba(0,0,0,0.2);
+  box-shadow: 0 0 0 1vw white, 0 0 0 0 rgba(0,0,0,0.4), -12vw 12vw 16vw 10vw rgba(0,0,0,0.2);
   transition: 3s;
 }
 
@@ -487,4 +487,22 @@ td:has(.carpet) {
 
 .input-container input {
   max-width: 70px;
+}
+
+.hole > div {
+  height: 100%;
+  width: 100%;
+  transform: translate(-30px, 30px);
+  background: #556a71;
+  transition: 3s;
+}
+
+.flat .hole > div {
+  transform: translate(0);
+  transition: 3s;
+}
+
+.hole {
+  overflow: hidden;
+  background: linear-gradient(135deg,burlywood 50%, beige 50%);
 }

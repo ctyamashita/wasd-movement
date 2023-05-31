@@ -7,7 +7,8 @@ const obj = {
   'place': 2,
   'disk': 2,
   'box': 4,
-  'carpet': 2
+  'carpet': 2,
+  'hole':1
 }
 
 // Board Size
@@ -162,8 +163,9 @@ const addToBoard = (thing) => {
   // if (randomCoord.length == 0) randomCoord = [availableTiles.pop()];
 
   const objEl = randomCoord[0].firstChild
-  objEl.classList.add(thing);
+
   if (thing == 'place') {
+    objEl.classList.add(thing);
     const bubble = document.createElement('div');
     bubble.classList.add('bubble');
     bubble.innerHTML = 'Bubble test';
@@ -174,6 +176,7 @@ const addToBoard = (thing) => {
     document.body.append(modal);
     bubble.onclick = () => { modal.classList.toggle('expand') };
   } else if (thing == 'box') {
+    objEl.classList.add(thing);
     const wallLeft = document.createElement('div');
     const wallRight = document.createElement('div');
     const boxCeiling = document.createElement('div');
@@ -184,16 +187,21 @@ const addToBoard = (thing) => {
     objEl.append(wallLeft);
     objEl.append(wallRight);
   } else if (thing == 'carpet') {
-    objEl.classList.remove(thing);
     const carpet = document.createElement('div');
     carpet.classList.add('carpet');
     objEl.parentElement.append(carpet);
+  } else if (thing == 'hole') {
+    objEl.classList.add(thing);
+    const bg = document.createElement('div');
+    objEl.append(bg);
+  } else {
+    objEl.classList.add(thing);
   }
 }
 
 const walkableTile = (x,y) => {
   const tile = document.querySelector(`.coord-${x}-${y}`)
-  return !tile.classList.contains('disk') && !tile.classList.contains('box')
+  return !tile.classList.contains('disk') && !tile.classList.contains('box') && !tile.classList.contains('hole')
 }
 
 const updateBoard = () => {
