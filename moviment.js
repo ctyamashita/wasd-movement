@@ -1,4 +1,21 @@
+// Rand method
+const rand = (size) => {
+  return Math.floor(Math.random() * size);
+}
+
+// Sample method
+Array.prototype.sample = function(size) {
+  if (size > 1) {
+    return this.shuffle().slice(0, size)
+  } else {
+    return this[rand(this.length)]
+  }
+}
+
 let mode = localStorage.getItem("mode") || '2D';
+
+// imgs for box
+const wallImages = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16'];
 
 // list of objects
 const obj = {
@@ -6,9 +23,9 @@ const obj = {
   'width': 5,
   'place': 2,
   'disk': 2,
-  'box': 4,
-  'carpet': 2,
-  'hole':1
+  'box': 3,
+  'carpet': 3,
+  'hole':3
 }
 
 // Board Size
@@ -157,7 +174,7 @@ window.onresize = () => {
 
 // Helper
 const addToBoard = (thing) => {
-  const index = Math.floor(Math.random() * availableTiles.length);
+  const index = rand(availableTiles.length);
   let randomCoord = availableTiles.splice(index, 1);
   // console.log(randomCoord, availableTiles);
   // if (randomCoord.length == 0) randomCoord = [availableTiles.pop()];
@@ -182,6 +199,9 @@ const addToBoard = (thing) => {
     const boxCeiling = document.createElement('div');
     wallLeft.classList.add('l-wall');
     wallRight.classList.add('r-wall');
+    if (rand(100) > 50) {
+      wallLeft.style.background = `url(images/img-${wallImages.sample()}.png) aliceblue`;
+    }
     boxCeiling.classList.add('ceiling-box');
     objEl.parentElement.append(boxCeiling);
     objEl.append(wallLeft);
@@ -207,6 +227,8 @@ const walkableTile = (x,y) => {
 const updateBoard = () => {
   const previousBoard = document.querySelector('.board-container');
   if (previousBoard) previousBoard.remove();
+  const previousModals = document.querySelectorAll('.modal');
+  if (previousModals) previousModals.forEach(modal=> modal.remove());
 
   generateBoard();
   const newBoard = document.querySelector('.board-container');

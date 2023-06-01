@@ -37,8 +37,7 @@ td > div {
 }
 
 td:has(.player) {
-  background: radial-gradient(rgba(0,0,0,0.3), transparent 50%);
-  outline: solid .7vw darksalmon;
+  outline: solid .7vw salmon;
   outline-offset: -2vw;
   border-radius: 30%;
   animation-name: idle-shadow;
@@ -75,7 +74,7 @@ td:has(.place) {
   animation-name: idle !important;
   animation-duration: 4s;
   animation-iteration-count: infinite;
-  mix-blend-mode: darken;
+  mix-blend-mode: multiply;
 }
 
 .board-container.flat {
@@ -100,14 +99,14 @@ td:has(.place) {
 }
 
 .flat .l-wall {
-  transform: skewX(-26.5deg) scaleX(0);
-  right: 12.5%;
+  transform: skewX(-26.5deg) scaleX(0) rotate(90deg);
+  left: 12.5%;
   transition: 3s;
 }
 
 .flat .r-wall {
-  transform: skewX(26.5deg) scaleX(0);
-  right: 12.5%;
+  transform: skewX(26.5deg) scaleX(0) rotate(90deg);
+  left: 12.5%;
   transition: 3s;
 }
 
@@ -151,28 +150,32 @@ td:has(.place) {
   100% {transform: skew(45deg, -45deg) scale(.45);}
 }
 
+:root {
+  --player-shadow: rgb(68, 22, 22);
+}
+
 @keyframes idle-shadow {
-  0% {background: radial-gradient(rgba(222,184,135,0), transparent 50%)}
-  5% {background: radial-gradient(rgba(222,184,135,0.1), transparent 50%)}
-  10% {background: radial-gradient(rgba(222,184,135,0.2), transparent 50%)}
-  15% {background: radial-gradient(rgba(222,184,135,0.3), transparent 50%)}
-  20% {background: radial-gradient(rgba(222,184,135,0.4), transparent 50%)}
-  25% {background: radial-gradient(rgba(222,184,135,0.5), transparent 50%)}
-  30% {background: radial-gradient(rgba(222,184,135,0.6), transparent 50%)}
-  35% {background: radial-gradient(rgba(222,184,135,0.7), transparent 50%)}
-  40% {background: radial-gradient(rgba(222,184,135,0.8), transparent 50%)}
-  45% {background: radial-gradient(rgba(222,184,135,0.9), transparent 50%)}
-  50% {background: radial-gradient(rgba(222,184,135,1), transparent 50%)}
-  55% {background: radial-gradient(rgba(222,184,135,.9), transparent 50%)}
-  60% {background: radial-gradient(rgba(222,184,135,0.8), transparent 50%)}
-  65% {background: radial-gradient(rgba(222,184,135,0.7), transparent 50%)}
-  70% {background: radial-gradient(rgba(222,184,135,0.6), transparent 50%)}
-  75% {background: radial-gradient(rgba(222,184,135,0.5), transparent 50%)}
-  80% {background: radial-gradient(rgba(222,184,135,0.4), transparent 50%)}
-  85% {background: radial-gradient(rgba(222,184,135,0.3), transparent 50%)}
-  90% {background: radial-gradient(rgba(222,184,135,0.2), transparent 50%)}
-  95% {background: radial-gradient(rgba(222,184,135,0.1), transparent 50%)}
-  100% {background: radial-gradient(rgba(222,184,135,0), transparent 50%)}
+  0% {background: radial-gradient(rgba(68, 22, 22, 0), transparent 50%)}
+  5% {background: radial-gradient(rgba(68, 22, 22,0.02), transparent 50%)}
+  10% {background: radial-gradient(rgba(68, 22, 22,0.04), transparent 50%)}
+  15% {background: radial-gradient(rgba(68, 22, 22,0.06), transparent 50%)}
+  20% {background: radial-gradient(rgba(68, 22, 22,0.08), transparent 50%)}
+  25% {background: radial-gradient(rgba(68, 22, 22,0.1), transparent 50%)}
+  30% {background: radial-gradient(rgba(68, 22, 22, 0.12), transparent 50%)}
+  35% {background: radial-gradient(rgba(68, 22, 22,0.14), transparent 50%)}
+  40% {background: radial-gradient(rgba(68, 22, 22,0.16), transparent 50%)}
+  45% {background: radial-gradient(rgba(68, 22, 22,0.18), transparent 50%)}
+  50% {background: radial-gradient(rgba(68, 22, 22,.2), transparent 50%)}
+  55% {background: radial-gradient(rgba(68, 22, 22,.18), transparent 50%)}
+  60% {background: radial-gradient(rgba(68, 22, 22,0.16), transparent 50%)}
+  65% {background: radial-gradient(rgba(68, 22, 22,0.14), transparent 50%)}
+  70% {background: radial-gradient(rgba(68, 22, 22,0.12), transparent 50%)}
+  75% {background: radial-gradient(rgba(68, 22, 22,0.1), transparent 50%)}
+  80% {background: radial-gradient(rgba(68, 22, 22,0.08), transparent 50%)}
+  85% {background: radial-gradient(rgba(68, 22, 22,0.06), transparent 50%)}
+  90% {background: radial-gradient(rgba(68, 22, 22,0.04), transparent 50%)}
+  95% {background: radial-gradient(rgba(68, 22, 22,0.02), transparent 50%)}
+  100% {background: radial-gradient(rgba(68, 22, 22,0), transparent 50%)}
 }
 
 .place {
@@ -187,13 +190,13 @@ td:has(.place) {
 
 @keyframes place-idle {
   0% {transform: skew(45deg, -45deg) scaleX(2) scale(.2) translateX(150%);}
-  50% {transform: skew(45deg, -45deg) scaleX(2) scale(.15) translateX(150%);}
+  50% {transform: skew(45deg, -45deg) scaleX(2) scale(.18) translateX(150%);}
   100% {transform: skew(45deg, -45deg) scaleX(2) scale(.2) translateX(150%);}
 }
 
 @keyframes place-idle-flat {
   0% {transform: skew(45deg, -45deg) scale(.2);}
-  50% {transform: skew(45deg, -45deg) scale(.15);}
+  50% {transform: skew(45deg, -45deg) scale(.18);}
   100% {transform: skew(45deg, -45deg) scale(.2);}
 }
 
@@ -303,7 +306,7 @@ td:has(.place.player) .bubble {
   position: relative;
   transform: scale(.8) translate(5vw, -5vw);
   border-radius: 50%;
-  background: radial-gradient(teal 50%, dimgray 50%);
+  background: radial-gradient(salmon 50%, dimgray 50%);
   box-shadow:
   -2.5vw 2.5vw 0px -2vw lightgray,
   -4vw 4vw 0px -3vw darkgray,
@@ -331,8 +334,11 @@ td:has(.disk) {
   position: relative;
   flex-grow: 1;
   background: aliceblue;
-  right: -12.5%;
-  transform: skewX(-26.5deg) scaleX(.5);
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  left: 37%;
+  width: 50%;
+  transform: skewX(-26.5deg) scale(1) rotate(90deg);
   outline: solid 0.2vw aliceblue;
   outline-offset: -0.1vw;
   border-radius: 0.1vw;
@@ -343,8 +349,9 @@ td:has(.disk) {
   position: relative;
   flex-grow: 1;
   background: powderblue;
-  right: -12.5%;
-  transform: skewX(26.5deg) scaleX(.5);
+  left: 37%;
+  width: 50%;
+  transform: skewX(26.5deg) scale(1) rotate(90deg);
   outline: solid 0.2vw aliceblue;
   outline-offset: -0.1vw;
   border-radius: 0.1vw;
@@ -376,11 +383,18 @@ td:has(.carpet) {
 }
 
 .carpet {
+  z-index: -1;
   top: 0;
   position: absolute;
   transform: revert;
-  background: orange;
-  mix-blend-mode: color-burn;
+  background: tan;
+  transform: translate(-5%,5%) scale(.95);
+  transition: 3s;
+}
+
+.flat .carpet {
+  transform: translate(0);
+  transition: 3s;
 }
 
 .mode {
@@ -477,32 +491,53 @@ td:has(.carpet) {
   top: 2vw;
   left: 2vw;
   background-color: white;
+  border-radius: 6px;
   padding: 12px;
+  box-shadow: 0 0 16px 0px rgba(0,0,0,.2);
 }
 
 .inputs {
-  display: inline-grid;
-  gap: 1vw;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1vw 0;
 }
 
 .input-container input {
-  max-width: 70px;
+  max-width: 40px;
+  border: none;
+  outline: solid 1px dimgray;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.inputs label {
+  border-radius: 15px;
+  padding: 2px 8px;
+  /* background-color: orange; */
+  text-align: center;
 }
 
 .hole > div {
   height: 100%;
   width: 100%;
   transform: translate(-30px, 30px);
-  background: #556a71;
-  transition: 3s;
+  background: cadetblue;
+  opacity: .6;
+  transition: transform 3s, opacity 6s, background 6s;
 }
 
 .flat .hole > div {
   transform: translate(0);
-  transition: 3s;
+  opacity: 1;
+  background: teal;
+  transition: transform 3s, opacity 1s, background 6s;
 }
 
 .hole {
   overflow: hidden;
   background: linear-gradient(135deg,burlywood 50%, beige 50%);
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  opacity: 1;
 }
