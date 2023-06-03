@@ -17,14 +17,61 @@ let mode = localStorage.getItem("mode") || '2D';
 // imgs for box
 const wallImages = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16'];
 
+const wallText = ['武', '山', '下', 'C', 'T', 'Y'];
+
+const convertToTag = (array) => {
+  return array.map((string) => `<img src="https://img.shields.io/badge/${string}-444c55?style=for-the-badge&logo=${string}&logoColor=white" alt="${string}" class="my-1"/>`).join('\n')
+}
+
+const createLinkBtn = (links) => {
+  return links.map((link) => `<a href="${link.href}" target="_blank" class="btn-cty"><i class="${link.icon} icon-modal"></i>${link.title}</a>`).join('')
+}
+
+const generateModalContent = (props) => {
+  return `<div class="modal-content-cty">
+    <div class="modal-header-cty bg-dark">
+      <h4 class="modal-title text-white"><i class="fas ${props.icon} ms-2 me-3"></i>${props.title.replaceAll('<br>', ' ')}</h4>
+      <button type="button" class="btn-close-white" aria-label="Close"><i class="fas fa-times-circle"></i></button>
+    </div>
+    <div class="modal-body">
+      <img src="images/${props.screenshot}" alt="screenshots" class="w-100">
+      <div class="mx-4">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8 my-5">
+          ${props.description.map((string) => `<p>${string}</p>`).join('')}
+        </div>
+        <hr>
+        <div class="d-flex flex-wrap justify-content-between">
+          <div class="col-12 col-sm-12 col-md-10 col-lg-7 col-xl-7 mb-3">
+            <p><strong>Tools and languages:</strong></p>
+            <ul class="list-inline">
+                ${props.front ? `<li><strong> Front-end: </strong>${convertToTag(props.front)}</li>` : ''}
+                ${props.back ? `<li><strong> Back-end: </strong>${convertToTag(props.back)}</li>` : ''}
+                ${props.others ? `<li><strong> Others: </strong>${convertToTag(props.others)}</li>` : ''}
+            </ul>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3">
+            ${ props.team.length > 1 ? '<p><strong>Team Members:</strong></p>' : '<p><strong>Created by:</strong></p>'}
+            <ul class="list-inline">
+              ${props.team.map((string) => `<li>${string}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer-cty bg-dark">
+      ${createLinkBtn(props.links)}
+    </div>
+  </div>`
+}
+
 // list of objects
 const obj = {
-  'height': 5,
-  'width': 5,
-  'place': 2,
-  'disk': 2,
-  'box': 3,
-  'carpet': 3,
+  'height': 7,
+  'width': 7,
+  'place': 3,
+  'disk': 3,
+  'box': 5,
+  'carpet': 8,
   'hole':3
 }
 
@@ -33,12 +80,7 @@ const obj = {
 
 let availableTiles;
 
-const modeBtn = document.createElement('div');
-const modeBtnTop = document.createElement('div');
-const modeBtnLeft = document.createElement('div');
-const sideContainer = document.createElement('div');
-const modeBtnRight = document.createElement('div');
-
+// setting inputs
 const inputContainer = document.createElement('div');
 inputContainer.classList.add('input-container');
 const inputs = document.createElement('div');
@@ -66,6 +108,12 @@ inputContainer.append(inputs);
 document.body.append(inputContainer);
 
 // Mode button
+const modeBtn = document.createElement('div');
+const modeBtnTop = document.createElement('div');
+const modeBtnLeft = document.createElement('div');
+const sideContainer = document.createElement('div');
+const modeBtnRight = document.createElement('div');
+
 modeBtn.classList.add('mode');
 if (mode == '2D') modeBtn.classList.add('flat');
 modeBtnRight.innerText = mode == '3D' ? '3D' : '2D'
@@ -190,6 +238,7 @@ const addToBoard = (thing) => {
     const modal = document.createElement('div');
     modal.classList.add(objEl.classList[0].replace('coord-',''));
     modal.classList.add('modal');
+    modal.innerHTML = generateModalContent(projectsContent.sample());
     document.body.append(modal);
     bubble.onclick = () => { modal.classList.toggle('expand') };
   } else if (thing == 'box') {
@@ -199,8 +248,12 @@ const addToBoard = (thing) => {
     const boxCeiling = document.createElement('div');
     wallLeft.classList.add('l-wall');
     wallRight.classList.add('r-wall');
-    if (rand(100) > 50) {
+    if (rand(100) > 70) {
       wallLeft.style.background = `url(images/img-${wallImages.sample()}.png) aliceblue`;
+    } else if (rand(100) > 70) {
+      wallRight.style.background = `url(images/img-${wallImages.sample()}.png) powderblue`;
+    } else if (rand(100) > 70) {
+      boxCeiling.innerText = wallText.sample();
     }
     boxCeiling.classList.add('ceiling-box');
     objEl.parentElement.append(boxCeiling);
@@ -217,11 +270,6 @@ const addToBoard = (thing) => {
   } else {
     objEl.classList.add(thing);
   }
-}
-
-const walkableTile = (x,y) => {
-  const tile = document.querySelector(`.coord-${x}-${y}`)
-  return !tile.classList.contains('disk') && !tile.classList.contains('box') && !tile.classList.contains('hole')
 }
 
 const updateBoard = () => {
@@ -243,13 +291,24 @@ const updateBoard = () => {
   }
 }
 
-updateBoard();
+let projectsContent = []
 
+fetch('./data/projects.json')
+  .then(response => response.json())
+  .then((json) => {
+    json.forEach(proj => projectsContent.push(proj))
+    updateBoard();
+  });
 
 for (const [key,value] of Object.entries(obj)) {
   addInputs(key, value);
 }
 
+
+const walkableTile = (x,y) => {
+  const tile = document.querySelector(`.coord-${x}-${y}`)
+  return !tile.classList.contains('disk') && !tile.classList.contains('box') && !tile.classList.contains('hole')
+}
 
 // Controls
 document.addEventListener('keyup', (e) => {

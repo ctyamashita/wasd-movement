@@ -1,7 +1,8 @@
 class Board {
-  constructor(height, width) {
+  constructor(document, height, width) {
     this.height = height;
     this.width = width;
+    this.document = document;
 
     const board = document.createElement('table');
 
@@ -43,6 +44,7 @@ class Board {
   }
 
   add(thing, x, y) {
+    const document = this.document;
     const coordsEl = document.querySelector(`coord-${x}-${y}`);
     coordsEl.classList.add(thing);
     switch (thing) {
