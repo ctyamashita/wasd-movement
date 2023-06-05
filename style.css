@@ -13,7 +13,7 @@ table {
   flex-direction: column;
   background: radial-gradient(beige, wheat);
   transform: scale(.5) scaleY(.5) skew(45deg, -45deg);
-  box-shadow: 0 0 0 1vw white, -8vw 8vw 0px 0 rgba(0,0,0,0.4), -12vw 12vw 16vw 10vw rgba(0,0,0,0.2);
+  box-shadow: 0 0 0 1vw white, -8vw 8vw 0px 0 rgba(0,0,0,0.4), -12vw 12vw 16vw 10vw skyblue;
   border-radius: 1vh;
   outline: solid 0.6vw tan;
   outline-offset: -0.3vw;
@@ -48,7 +48,7 @@ td:has(.player) {
 }
 
 td:has(.place) {
-  background: radial-gradient(white 5%, rgba(255,255,255,0.3) 28%, transparent 70%);
+  background: radial-gradient(rgba(255, 255, 255, 0.7) 20%, transparent 56%);
   border: none;
 }
 
@@ -96,6 +96,7 @@ td:has(.place) {
 }
 
 .flat .place {
+  border-radius: 50%;
   animation-name: place-idle-flat;
 }
 
@@ -180,19 +181,22 @@ td:has(.place) {
 }
 
 .place {
-  border-radius: 50%;
-  background: white;
-  box-shadow: 0 0 0 8px yellow, -6px 0px 20px 16px gold;
-  transform: skew(45deg, -45deg) scale(.4) translateX(150%);
+  border-radius: 50% 50% 50% 0;
+  background: lightpink;
+  box-shadow: 0 0 12px 10px gold, -6px 0px 80px 16px mediumvioletred;
+  transform: skew(45deg, -45deg) scale(.4) scaleX(2) translateX(150%) rotate(45deg);
   animation-name: place-idle;
   animation-duration: 3s;
   animation-iteration-count: infinite;
+  /* mix-blend-mode: hard-light; */
+  outline-offset: -60px;
+  outline: solid 30px white;
 }
 
 @keyframes place-idle {
-  0% {transform: skew(45deg, -45deg) scaleX(2) scale(.2) translateX(150%);}
-  50% {transform: skew(45deg, -45deg) scaleX(2) scale(.18) translateX(150%);}
-  100% {transform: skew(45deg, -45deg) scaleX(2) scale(.2) translateX(150%);}
+  0% {transform: skew(45deg, -45deg) scale(.2) scaleX(2) translateX(150%) rotate(45deg);}
+  50% {transform: skew(45deg, -45deg) scale(.18) scaleX(2) translateX(150%) rotate(45deg);}
+  100% {transform: skew(45deg, -45deg) scale(.2) scaleX(2) translateX(150%) rotate(45deg);}
 }
 
 @keyframes place-idle-flat {
@@ -224,9 +228,11 @@ td:has(.place) {
 
 
 .place.player {
+  border-radius: 50%;
   box-shadow: 0 0 4vw 1vw greenyellow;
   mix-blend-mode: normal;
   outline-color: olivedrab;
+  outline: none;
 }
 
 .player.place {
@@ -240,7 +246,7 @@ td:has(.place.player) {
 .bubble {
   position: absolute;
   display: none;
-  min-width: min-content;
+  width: min-content;
   height: fit-content;
   opacity: 0;
   bottom: 175%;
@@ -248,8 +254,12 @@ td:has(.place.player) {
   transform: skew(45deg, -45deg) rotate(90deg) scale(1, 2) translate(50%, -50%);
   background: white;
   box-shadow: -6px 6px 0px -1px rgba(0,0,0,0.3);
+  outline: solid 4px;
+  outline-offset: -4px;
   border-radius: 12px 12px 12px 0px;
   padding: 8px 16px;
+  font-size: 24px;
+  line-height: 36px;
 }
 
 .modal {
@@ -267,7 +277,7 @@ td:has(.place.player) {
 .modal.expand {
   display: flex;
   position: absolute;
-  width: 70vw;
+  width: 90vw;
   height: auto;
   animation: show .3s;
   transition:.3s;
@@ -292,7 +302,9 @@ body:has(.modal.expand) .bubble {
   opacity: 0 !important;
 }
 
-td:has(.place.player) .bubble {
+td:has(.place.player) .bubble,
+td:has(:hover) .bubble,
+td:has(:focus) .bubble {
   z-index: 1;
   position: relative;
   display: block;
@@ -300,7 +312,16 @@ td:has(.place.player) .bubble {
   animation: show .3s, bubble-idle 3s infinite
 }
 
-.flat td:has(.place.player) .bubble {
+body:not(:has(.flat)) td:has(:hover) .bubble,
+body:not(:has(.flat)) td:has(:focus) .bubble {
+  bottom: 135%;
+  right: -80%;
+}
+
+
+.flat td:has(.place.player) .bubble,
+.flat td:has(:hover) .bubble,
+.flat td:has(:focus) .bubble {
   animation: flat-bubble-idle 3s infinite !important;
 }
 
@@ -350,7 +371,7 @@ td:has(.disk) {
 .r-wall {
   position: relative;
   flex-grow: 1;
-  background: powderblue;
+  background: rgb(211, 232, 237);
   background-size: contain !important;
   background-repeat: no-repeat !important;
   left: 37%;
@@ -562,9 +583,10 @@ input[type=number]::-webkit-inner-spin-button {
   pointer-events: auto;
   background-color: rgb(230, 230, 230);
   background-clip: padding-box;
-  border-radius: 23px;
+  border-radius: 12px;
   outline: 0;
-  border: 8px solid white;
+  border: 4px solid white;
+  overflow: hidden;
 }
 
 
@@ -573,8 +595,6 @@ input[type=number]::-webkit-inner-spin-button {
   flex-shrink: 0;
   align-items: center;
   justify-content: space-between;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
 }
 
 .modal-footer-cty {
@@ -584,8 +604,6 @@ input[type=number]::-webkit-inner-spin-button {
   align-items: center;
   justify-content: flex-end;
   padding: 0.75rem;
-  border-bottom-right-radius: 16px;
-  border-bottom-left-radius: 16px;
 }
 
 .bg-ronin {
@@ -629,7 +647,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 .bg-dark {
-  background: dimgray;
+  background: #444c55;
   color: white;
 }
 
@@ -637,7 +655,7 @@ input[type=number]::-webkit-inner-spin-button {
   overflow-y: scroll;
   display: grid;
   overflow-y: scroll;
-  height: 50vh;
+  height: 75vh;
 }
 
 .modal-body > img {
@@ -647,12 +665,32 @@ input[type=number]::-webkit-inner-spin-button {
 @media (min-width: 1200px) {
   .modal-body {
     grid-template-columns: 2fr 1fr;
-    gap: 12px;
-    height: 50vh;
+    height: auto;
     overflow: visible;
   }
-  .modal-body > div {
+
+  .list-inline li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .list-inline {
+    padding-left: 16px;
+  }
+
+  .tools, .members {
+    margin: 12px 24px;
+  }
+
+  .modal.expand {
+    width: 70vw;
+  }
+
+  .description  {
+    max-height: 34vh;
     overflow-y: scroll;
+    margin: 0 0 0 12px !important;
   }
 }
 
@@ -669,4 +707,30 @@ input[type=number]::-webkit-inner-spin-button {
 .modal-title {
   font-size: 24px;
   margin: 16px 0 16px 16px;
+}
+
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.description, .tools, .members {
+  margin: 0 12px;
 }

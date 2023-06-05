@@ -12,6 +12,11 @@ Array.prototype.sample = function(size) {
   }
 }
 
+// close modal
+const closeModal = () => {
+  document.querySelector('.expand').classList.remove('expand')
+}
+
 let mode = localStorage.getItem("mode") || '2D';
 
 // imgs for box
@@ -30,32 +35,27 @@ const createLinkBtn = (links) => {
 const generateModalContent = (props) => {
   return `<div class="modal-content-cty">
     <div class="modal-header-cty bg-dark">
-      <h4 class="modal-title text-white"><i class="fas ${props.icon} ms-2 me-3"></i>${props.title.replaceAll('<br>', ' ')}</h4>
-      <button type="button" class="btn-close-white" aria-label="Close"><i class="fas fa-times-circle"></i></button>
+      <h4 class="modal-title text-white"><i class="fas ${props.icon}"></i>${props.title.replaceAll('<br>', ' ')}</h4>
+      <button type="button" class="btn-close-white" aria-label="Close" onclick="closeModal()"><i class="fas fa-times-circle"></i></button>
     </div>
     <div class="modal-body">
       <img src="images/${props.screenshot}" alt="screenshots" class="w-100">
-      <div class="mx-4">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8 my-5">
-          ${props.description.map((string) => `<p>${string}</p>`).join('')}
-        </div>
-        <hr>
-        <div class="d-flex flex-wrap justify-content-between">
-          <div class="col-12 col-sm-12 col-md-10 col-lg-7 col-xl-7 mb-3">
-            <p><strong>Tools and languages:</strong></p>
-            <ul class="list-inline">
-                ${props.front ? `<li><strong> Front-end: </strong>${convertToTag(props.front)}</li>` : ''}
-                ${props.back ? `<li><strong> Back-end: </strong>${convertToTag(props.back)}</li>` : ''}
-                ${props.others ? `<li><strong> Others: </strong>${convertToTag(props.others)}</li>` : ''}
-            </ul>
-          </div>
-          <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3">
-            ${ props.team.length > 1 ? '<p><strong>Team Members:</strong></p>' : '<p><strong>Created by:</strong></p>'}
-            <ul class="list-inline">
-              ${props.team.map((string) => `<li>${string}</li>`).join('')}
-            </ul>
-          </div>
-        </div>
+      <div class="description">
+        ${props.description.map((string) => `<p>${string}</p>`).join('')}
+      </div>
+      <div class="tools">
+        <p><strong>Tools and languages:</strong></p>
+        <ul class="list-inline">
+            ${props.front ? `<li><strong> Front-end: </strong>${convertToTag(props.front)}</li>` : ''}
+            ${props.back ? `<li><strong> Back-end: </strong>${convertToTag(props.back)}</li>` : ''}
+            ${props.others ? `<li><strong> Others: </strong>${convertToTag(props.others)}</li>` : ''}
+        </ul>
+      </div>
+      <div class="members">
+        ${ props.team.length > 1 ? '<p><strong>Team Members:</strong></p>' : '<p><strong>Created by:</strong></p>'}
+        <ul class="list-inline">
+          ${props.team.map((string) => `<li>${string}</li>`).join('')}
+        </ul>
       </div>
     </div>
     <div class="modal-footer-cty bg-dark">
@@ -68,11 +68,11 @@ const generateModalContent = (props) => {
 const obj = {
   'height': 7,
   'width': 7,
-  'place': 3,
+  'place': 6,
   'disk': 3,
-  'box': 5,
+  'box': 6,
   'carpet': 8,
-  'hole':3
+  'hole':4
 }
 
 // Board Size
@@ -231,16 +231,19 @@ const addToBoard = (thing) => {
 
   if (thing == 'place') {
     objEl.classList.add(thing);
+    const projectObj = projectsContent.pop();
+    console.log(projectObj);
     const bubble = document.createElement('div');
     bubble.classList.add('bubble');
-    bubble.innerHTML = 'Bubble test';
+    bubble.innerHTML = `<i class="fas ${projectObj.icon}"></i>`;
     objEl.parentElement.append(bubble);
     const modal = document.createElement('div');
     modal.classList.add(objEl.classList[0].replace('coord-',''));
     modal.classList.add('modal');
-    modal.innerHTML = generateModalContent(projectsContent.sample());
+    modal.innerHTML = generateModalContent(projectObj);
     document.body.append(modal);
     bubble.onclick = () => { modal.classList.toggle('expand') };
+    objEl.onclick = () => { modal.classList.toggle('expand') };
   } else if (thing == 'box') {
     objEl.classList.add(thing);
     const wallLeft = document.createElement('div');
@@ -278,27 +281,28 @@ const updateBoard = () => {
   const previousModals = document.querySelectorAll('.modal');
   if (previousModals) previousModals.forEach(modal=> modal.remove());
 
-  generateBoard();
-  const newBoard = document.querySelector('.board-container');
-  mode = localStorage.getItem("mode");
-  if (mode == '2D') newBoard.classList.add('flat');
-  for (const [key,value] of Object.entries(obj)) {
-    if (!(key === 'height' || key === 'width')) {
-      for (let times = 0; times < value; times++) {
-        addToBoard(key);
+  fetch('./data/projects.json')
+  .then(response => response.json())
+  .then((json) => {
+    json.forEach(proj => projectsContent.push(proj))
+    generateBoard();
+    const newBoard = document.querySelector('.board-container');
+    mode = localStorage.getItem("mode");
+    if (mode == '2D') newBoard.classList.add('flat');
+    for (const [key,value] of Object.entries(obj)) {
+      if (!(key === 'height' || key === 'width')) {
+        for (let times = 0; times < value; times++) {
+          addToBoard(key);
+        }
       }
     }
-  }
+  });
+
 }
 
 let projectsContent = []
 
-fetch('./data/projects.json')
-  .then(response => response.json())
-  .then((json) => {
-    json.forEach(proj => projectsContent.push(proj))
-    updateBoard();
-  });
+  updateBoard();
 
 for (const [key,value] of Object.entries(obj)) {
   addInputs(key, value);
