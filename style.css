@@ -13,7 +13,7 @@ table {
   flex-direction: column;
   background: radial-gradient(beige, wheat);
   transform: scale(.5) scaleY(.5) skew(45deg, -45deg);
-  box-shadow: 0 0 0 1vw white, -8vw 8vw 0px 0 rgba(0,0,0,0.4), -12vw 12vw 16vw 10vw skyblue;
+  box-shadow: 0 0 0 1vh white, -8vh 8vh 0px 0 rgba(0,0,0,0.4), -12vh 12vh 16vh 10vh skyblue;
   border-radius: 1vh;
   outline: solid 0.6vw tan;
   outline-offset: -0.3vw;
@@ -53,6 +53,7 @@ td:has(.place) {
 }
 
 .board-container {
+  background: radial-gradient(transparent, darkcyan);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -80,14 +81,13 @@ td:has(.place) {
 
 .board-container.flat {
   overflow: hidden;
-  transition: 3s;
 }
 
 .flat table {
   transform: scale(.8) scaleY(1) skew(0deg);
   scale: .8;
   transition: 3s;
-  box-shadow: 0 0 0 1vw white, 0 0 0 0 rgba(0,0,0,0.4), -12vw 12vw 16vw 10vw rgba(0,0,0,0.2);
+  box-shadow: 0 0 0 .7vw white, 0 0 0 0 rgba(0,0,0,0.4), 0 0 16vw 10vw skyblue;
   transition: 3s;
 }
 
@@ -265,7 +265,6 @@ td:has(.place.player) {
 .modal {
   z-index: 999;
   /* background-color: aliceblue; */
-  margin: 5%;
   display: none;
   /* border-radius: 12px; */
   height: 0;
@@ -276,6 +275,7 @@ td:has(.place.player) {
 
 .modal.expand {
   display: flex;
+  justify-content: center;
   position: absolute;
   width: 90vw;
   height: auto;
@@ -286,7 +286,7 @@ td:has(.place.player) {
 .bg {
   display: none;
   z-index: 998;
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -457,7 +457,7 @@ td:has(.carpet) {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 0 2px lightblue;
+  box-shadow: 0 0 0 2px darkcyan;
 }
 
 .box-left-btn {
@@ -486,7 +486,7 @@ td:has(.carpet) {
   transform: rotate(-45deg) skew(15deg, 15deg);
   background: white;
   cursor: pointer !important;
-  box-shadow: 0 0 0 4px lightblue;
+  box-shadow: 0 0 0 4px darkcyan;
   transition: 3s;
 }
 
@@ -508,7 +508,7 @@ td:has(.carpet) {
   width: 50px;
   transition: 3s;
   margin: 0 auto;
-  top: 2.3vw;
+  top: 12px;
   position: relative;
 }
 
@@ -612,7 +612,7 @@ input[type=number]::-webkit-inner-spin-button {
 
 .btn-cty {
   display: flex;
-  padding: 8px 16px;
+  padding: 8px 12px;
   border-radius: 12px;
   align-items: center;
   gap: 16px;
@@ -654,25 +654,45 @@ input[type=number]::-webkit-inner-spin-button {
 .modal-body {
   overflow-y: scroll;
   display: grid;
-  overflow-y: scroll;
+  align-items: center;
   height: 75vh;
 }
 
 .modal-body > img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 @media (min-width: 1200px) {
-  .modal-body {
-    grid-template-columns: 2fr 1fr;
-    height: auto;
-    overflow: visible;
+  p, li, a {
+    font-size: 16px;
   }
 
-  .list-inline li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  td:has(.player) {
+    outline: solid .7vh salmon;
+    outline-offset: -2vh;
+  }
+
+  .disk {
+    box-shadow:
+    -2.5vh 2.5vh 0px -2vh lightgray,
+    -4vh 4vh 0px -3vh darkgray,
+    -5.5vh 5.5vh 0px -4vh dimgray,
+    -6vh 6vh 2vh -2vh rgba(0,0,0, 0.6),
+    -5vh 5vh 2vh 0 burlywood;
+    transform: scale(.8) translate(5vh, -5vh);
+  }
+
+  table {
+    box-shadow: 0 0 0 .7vw white, -8vw 8vw 0px 0 rgba(0,0,0,0.4), -12vw 12vw 16vw 10vw skyblue;
+  }
+
+  .modal-body {
+    grid-template-columns: auto auto;
+    height: auto;
+    overflow: visible;
   }
 
   .list-inline {
@@ -688,9 +708,29 @@ input[type=number]::-webkit-inner-spin-button {
   }
 
   .description  {
-    max-height: 34vh;
+    height: 90%;
+    max-width: 420px;
     overflow-y: scroll;
-    margin: 0 0 0 12px !important;
+    margin: 0 0 0 32px !important;
+    padding-right: 24px;
+  }
+
+}
+
+@media (min-width: 480px) {
+  .list-inline li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 8px;
+  }
+
+  .modal-content-cty {
+    margin: 2.5% 0 5% 0;
+  }
+
+  .modal.expand {
+    top: 5%;
   }
 }
 
@@ -698,6 +738,7 @@ input[type=number]::-webkit-inner-spin-button {
   display: block;
   margin: 4px 0;
 }
+
 
 .modal-title i {
   margin-right: 16px;

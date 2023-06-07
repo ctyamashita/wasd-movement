@@ -68,7 +68,7 @@ const generateModalContent = (props) => {
 const obj = {
   'height': 7,
   'width': 7,
-  'place': 6,
+  'place': 7,
   'disk': 3,
   'box': 6,
   'carpet': 8,
