@@ -60,6 +60,9 @@ td:has(.place) {
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  position: fixed;
+  top: 0;
+  z-index: -1;
 }
 
 .player, .place {
@@ -398,7 +401,7 @@ td:has(.disk) {
     justify-content: center;
     font-weight: 900;
     color: dimgray;
-    font-size: 550%;
+    font-size: 10vw;
     overflow: hidden;
 }
 
@@ -670,6 +673,10 @@ input[type=number]::-webkit-inner-spin-button {
     font-size: 16px;
   }
 
+  .ceiling-box {
+    font-size: 10vh;
+  }
+
   td:has(.player) {
     outline: solid .7vh salmon;
     outline-offset: -2vh;
@@ -774,4 +781,27 @@ input[type=number]::-webkit-inner-spin-button {
 
 .description, .tools, .members {
   margin: 0 12px;
+}
+
+.key-container {
+  position: absolute;
+  bottom: 1vw;
+  right: 1vw;
+  display: flex;
+  flex-wrap: wrap;
+  width: 120px;
+}
+
+.w-key, .a-key, .s-key, .d-key {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  margin: 0 auto;
+
+}
+
+div:has(.w-key) {
+  width: 120px;
 }

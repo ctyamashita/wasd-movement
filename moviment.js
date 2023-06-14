@@ -66,13 +66,13 @@ const generateModalContent = (props) => {
 
 // list of objects
 const obj = {
-  'height': 7,
-  'width': 7,
+  'height': 4,
+  'width': 4,
   'place': 7,
-  'disk': 3,
-  'box': 6,
-  'carpet': 8,
-  'hole':4
+  'disk': 1,
+  'box': 3,
+  'carpet': 3,
+  'hole':1
 }
 
 // Board Size
@@ -338,5 +338,57 @@ document.addEventListener('keyup', (e) => {
     if (['a', 'ArrowLeft'].includes(e.key) && x > 1  && walkableTile(x - 1, y)) x -= 1
     if (['d', 'ArrowRight'].includes(e.key) && x < width  && walkableTile(x + 1, y)) x += 1
     document.querySelector(`.coord-${x}-${y}`).classList.add('player');
+  }
+});
+
+// display controls
+const wKey = document.createElement('div');
+wKey.innerHTML = '<p>W</p>';
+wKey.classList.add('w-key')
+
+const aKey = document.createElement('div');
+aKey.innerHTML = '<p>A</p>';
+aKey.classList.add('a-key')
+
+const sKey = document.createElement('div');
+sKey.innerHTML = '<p>S</p>';
+sKey.classList.add('s-key')
+
+const dKey = document.createElement('div');
+dKey.innerHTML = '<p>D</p>';
+dKey.classList.add('d-key')
+
+
+const keysContainer = document.createElement('div');
+keysContainer.classList.add('key-container');
+
+const firstRow = document.createElement('div');
+firstRow.append(wKey)
+
+keysContainer.append(firstRow);
+keysContainer.append(aKey);
+keysContainer.append(sKey);
+keysContainer.append(dKey);
+
+document.body.append(keysContainer);
+
+wKey.onkeydown = (e) => {
+}
+wKey.onkeyup = (e) => {
+  if (e.key == 'w') {
+    wKey.style.border = 'none';
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  const keyPressed = e.key;
+  if (['w','a','s','d'].includes(keyPressed)) {
+    document.querySelector(`.${keyPressed}-key`).style.outline = 'solid 4px';
+  }
+});
+document.addEventListener('keyup', (e) => {
+  const keyPressed = e.key;
+  if (['w','a','s','d'].includes(keyPressed)) {
+    document.querySelector(`.${keyPressed}-key`).style.outline = 'none';
   }
 });
