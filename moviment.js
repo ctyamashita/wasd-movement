@@ -383,12 +383,12 @@ wKey.onkeyup = (e) => {
 document.addEventListener('keydown', (e) => {
   const keyPressed = e.key;
   if (['w','a','s','d'].includes(keyPressed)) {
-    document.querySelector(`.${keyPressed}-key`).style.outline = 'solid 4px';
+    document.querySelector(`.${keyPressed}-key`).style.outlineColor = 'black';
   }
 });
 document.addEventListener('keyup', (e) => {
   const keyPressed = e.key;
   if (['w','a','s','d'].includes(keyPressed)) {
-    document.querySelector(`.${keyPressed}-key`).style.outline = 'none';
+    document.querySelector(`.${keyPressed}-key`).style.outlineColor = 'rgba(0, 0, 0, .3)';
   }
 });

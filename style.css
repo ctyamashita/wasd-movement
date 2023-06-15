@@ -799,9 +799,16 @@ input[type=number]::-webkit-inner-spin-button {
   justify-self: center;
   align-items: center;
   margin: 0 auto;
-
+  outline: solid 3px rgba(0,0,0,.3);
+  outline-offset: -6px;
+  transition: .3s;
 }
 
 div:has(.w-key) {
   width: 120px;
+}
+
+.w-key p, .a-key p, .s-key p, .d-key p {
+  width: inherit;
+  text-align: center;
 }
