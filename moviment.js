@@ -83,6 +83,7 @@ let availableTiles;
 // setting inputs
 const inputContainer = document.createElement('div');
 inputContainer.classList.add('input-container');
+inputContainer.classList.add('hide');
 const inputs = document.createElement('div');
 inputs.classList.add('inputs');
 
@@ -128,7 +129,7 @@ modeBtn.onclick = () => {
   const player = document.querySelector('.player');
   const places = document.querySelectorAll('.place');
 
-  player.parentElement.style.opacity = 0;
+  // player.parentElement.style.opacity = 0;
   player.style.opacity = 0;
   places.forEach(place => {
     place.parentElement.style.background = 'transparent';
@@ -136,7 +137,7 @@ modeBtn.onclick = () => {
     place.nextElementSibling.style.opacity = 0;
   });
   setTimeout(() => {
-    player.parentElement.style.opacity = 1;
+    // player.parentElement.style.opacity = 1;
     player.style.opacity = 1;
     places.forEach(place => {
       place.parentElement.style.background = 'radial-gradient(white 5%, rgba(255,255,255,0.3) 28%, transparent 70%)';
@@ -193,6 +194,18 @@ const generateBoard = () => {
   const boardContainer = document.createElement('div');
   boardContainer.classList.add('board-container');
   boardContainer.append(board);
+
+  const wall = document.createElement('div');
+  const wallRight = document.createElement('div');
+  const wallLeft = document.createElement('div');
+  wallLeft.classList.add('wall-left');
+  wallRight.classList.add('wall-right');
+  wall.classList.add('wall-container');
+
+  wall.append(wallLeft);
+  wall.append(wallRight);
+
+  boardContainer.append(wall);
   document.body.append(boardContainer);
   // All tiles
   availableTiles = Array.from(document.querySelectorAll('td'));
@@ -231,8 +244,8 @@ const addToBoard = (thing) => {
 
   if (thing == 'place') {
     objEl.classList.add(thing);
+    objEl.setAttribute('tabindex', 0)
     const projectObj = projectsContent.pop();
-    console.log(projectObj);
     const bubble = document.createElement('div');
     bubble.classList.add('bubble');
     bubble.innerHTML = `<i class="fas ${projectObj.icon}"></i>`;
@@ -264,8 +277,11 @@ const addToBoard = (thing) => {
     objEl.append(wallRight);
   } else if (thing == 'carpet') {
     const carpet = document.createElement('div');
+    const carpetBase = document.createElement('div');
     carpet.classList.add('carpet');
+    carpetBase.classList.add('carpet-base');
     objEl.parentElement.append(carpet);
+    objEl.parentElement.append(carpetBase);
   } else if (thing == 'hole') {
     objEl.classList.add(thing);
     const bg = document.createElement('div');
@@ -380,15 +396,41 @@ wKey.onkeyup = (e) => {
   }
 }
 
+let ctrl = false
+
 document.addEventListener('keydown', (e) => {
-  const keyPressed = e.key;
+  let keyPressed = e.key;
+  if ('ArrowUp' == e.key) keyPressed = 'w';
+  if ('ArrowDown' == e.key) keyPressed = 's';
+  if ('ArrowLeft' == e.key) keyPressed = 'a';
+  if ('ArrowRight' == e.key) keyPressed = 'd';
+
   if (['w','a','s','d'].includes(keyPressed)) {
-    document.querySelector(`.${keyPressed}-key`).style.outlineColor = 'black';
+    const keyEl = document.querySelector(`.${keyPressed}-key`);
+    keyEl.style.opacity = 1;
+    keyEl.style.scale = .9;
+    keyEl.style.background = 'dimgray'
   }
+
+  if (keyPressed == 'Control') ctrl = true;
 });
 document.addEventListener('keyup', (e) => {
-  const keyPressed = e.key;
+  let keyPressed = e.key;
+  if ('ArrowUp' == e.key) keyPressed = 'w';
+  if ('ArrowDown' == e.key) keyPressed = 's';
+  if ('ArrowLeft' == e.key) keyPressed = 'a';
+  if ('ArrowRight' == e.key) keyPressed = 'd';
+
   if (['w','a','s','d'].includes(keyPressed)) {
-    document.querySelector(`.${keyPressed}-key`).style.outlineColor = 'rgba(0, 0, 0, .3)';
+    const keyEl = document.querySelector(`.${keyPressed}-key`);
+    keyEl.style.opacity = .7;
+    keyEl.style.scale = '1';
+    keyEl.style.background = 'transparent'
+  }
+
+  if (keyPressed == 'Control') ctrl = false;
+
+  if (keyPressed == 'i' && ctrl) {
+    document.querySelector('.input-container').classList.toggle('hide');
   }
 });

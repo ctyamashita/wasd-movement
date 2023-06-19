@@ -1,11 +1,12 @@
 body {
   padding: 0;
   margin: 0;
-  background: lightblue;
+  background: darkcyan;
   font-family: monospace;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100vh;
 }
 
 table {
@@ -13,7 +14,7 @@ table {
   flex-direction: column;
   background: radial-gradient(beige, wheat);
   transform: scale(.5) scaleY(.5) skew(45deg, -45deg);
-  box-shadow: 0 0 0 1vh white, -8vh 8vh 0px 0 rgba(0,0,0,0.4), -12vh 12vh 16vh 10vh skyblue;
+  box-shadow: 0 0 0 1vh white, -8vh 8vh 0px 0 rgba(0,0,0,0.4);
   border-radius: 1vh;
   outline: solid 0.6vw tan;
   outline-offset: -0.3vw;
@@ -38,9 +39,9 @@ td > div {
 }
 
 td:has(.player) {
-  outline: solid .7vw salmon;
-  outline-offset: -2vw;
-  border-radius: 30%;
+  outline: solid 1.7vw salmon;
+  outline-offset: -9vw;
+  border-radius: 50%;
   animation-name: idle-shadow;
   animation-duration: 4s;
   animation-iteration-count: infinite;
@@ -53,16 +54,16 @@ td:has(.place) {
 }
 
 .board-container {
-  background: radial-gradient(transparent, darkcyan);
-  overflow: hidden;
+  background: radial-gradient(lightblue, darkcyan 70%);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  top: 0;
+  flex-direction: column;
   z-index: -1;
+  margin: 0 auto;
+  position: fixed;
+  transform: translateY(25%);
+  transition: 3s;
 }
 
 .player, .place {
@@ -83,14 +84,15 @@ td:has(.place) {
 }
 
 .board-container.flat {
-  overflow: hidden;
+  transform: translateY(0);
+  transition: 3s;
 }
 
 .flat table {
   transform: scale(.8) scaleY(1) skew(0deg);
   scale: .8;
   transition: 3s;
-  box-shadow: 0 0 0 .7vw white, 0 0 0 0 rgba(0,0,0,0.4), 0 0 16vw 10vw skyblue;
+  box-shadow: 0 0 0 .7vw white, 0 0 0 0 rgba(0,0,0,0.4);
   transition: 3s;
 }
 
@@ -422,13 +424,22 @@ td:has(.carpet) {
   top: 0;
   position: absolute;
   transform: revert;
-  background: tan;
-  transform: translate(-5%,5%) scale(.95);
+  background: palegreen;
+  transform: translate(5%,-5%) scale(0.90);
+  transition: 3s;
+}
+
+.carpet-base {
+  z-index: -2;
+  top: 0;
+  position: absolute;
+  transform: revert;
+  background: linear-gradient(-45deg, mediumseagreen 50%, lightgreen 50%);
   transition: 3s;
 }
 
 .flat .carpet {
-  transform: translate(0);
+  transform: translate(0) scale(.9);
   transition: 3s;
 }
 
@@ -489,7 +500,7 @@ td:has(.carpet) {
   transform: rotate(-45deg) skew(15deg, 15deg);
   background: white;
   cursor: pointer !important;
-  box-shadow: 0 0 0 4px darkcyan;
+  outline: solid 7px darkcyan;
   transition: 3s;
 }
 
@@ -678,8 +689,8 @@ input[type=number]::-webkit-inner-spin-button {
   }
 
   td:has(.player) {
-    outline: solid .7vh salmon;
-    outline-offset: -2vh;
+    outline: solid 1.7vh salmon;
+    outline-offset: -9vh;
   }
 
   .disk {
@@ -693,7 +704,7 @@ input[type=number]::-webkit-inner-spin-button {
   }
 
   table {
-    box-shadow: 0 0 0 .7vw white, -8vw 8vw 0px 0 rgba(0,0,0,0.4), -12vw 12vw 16vw 10vw skyblue;
+    box-shadow: 0 0 0 .7vw white, -8vw 8vw 0px 0 rgba(0,0,0,0.4);
   }
 
   .modal-body {
@@ -799,9 +810,12 @@ input[type=number]::-webkit-inner-spin-button {
   justify-self: center;
   align-items: center;
   margin: 0 auto;
-  outline: solid 3px rgba(0,0,0,.3);
+  outline: solid 3px rgba(255,255,255);
+  border-radius: 8px;
   outline-offset: -6px;
+  opacity: .7;
   transition: .3s;
+  color: white;
 }
 
 div:has(.w-key) {
@@ -811,4 +825,43 @@ div:has(.w-key) {
 .w-key p, .a-key p, .s-key p, .d-key p {
   width: inherit;
   text-align: center;
+}
+
+.hide {
+  display: none;
+}
+
+.wall-container {
+  z-index: -1;
+  position: absolute;
+  display: flex;
+  top: -12.5%;
+  height: 50%;
+  width: 100%;
+  transition: transform 2s, opacity 4s;
+  transition-property: transform;
+  transition-delay: 1s;
+}
+
+.wall-left, .wall-right {
+  width: 50%;
+  outline: solid .5vh white;
+  outline-offset: -.25vh;
+  border-radius: 4px;
+}
+
+.wall-right {
+  background: green;
+  transform: skewY(26deg);
+}
+
+.wall-left {
+  background: red;
+  transform: skewY(-26deg);
+}
+
+.flat .wall-container {
+  opacity: 0;
+  transform: translateY(-100vh);
+  transition: 2s, opacity 1s;
 }
