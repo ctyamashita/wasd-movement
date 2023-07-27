@@ -66,9 +66,9 @@ const generateModalContent = (props) => {
 
 // list of objects
 const obj = {
-  'height': 4,
-  'width': 4,
-  'place': 7,
+  'height': 7,
+  // 'width': 7,
+  'place': 8,
   'disk': 1,
   'box': 3,
   'carpet': 3,
@@ -92,6 +92,7 @@ const addInputs = (type, quantity) => {
   const typeLabel = document.createElement('label');
   typeLabel.for = type;
   typeLabel.innerText = type;
+  if (type == 'height') typeLabel.innerText = 'size';
   typeInput.id = type;
   typeInput.value = quantity
   typeInput.type = 'number';
@@ -167,7 +168,7 @@ document.body.append(bg);
 const generateBoard = () => {
   const board = document.createElement('table');
   const height = obj['height'];
-  const width = obj['width'];
+  const width = obj['width'] || obj['height'];
 
   for (let y = 1; y <= height; y++) {
     const row = document.createElement('tr');
@@ -335,7 +336,7 @@ document.addEventListener('keyup', (e) => {
   const currentPosition = document.querySelector('.player');
   let [x, y] = currentPosition.classList[0].split('-').slice(1).map(num => Number(num));
   const height = obj['height'];
-  const width = obj['width'];
+  const width = obj['width'] || obj['height'];
 
   if (currentPosition.classList.contains('place')) {
     // click if enter or space
@@ -388,15 +389,11 @@ keysContainer.append(dKey);
 
 document.body.append(keysContainer);
 
-wKey.onkeydown = (e) => {
-}
 wKey.onkeyup = (e) => {
   if (e.key == 'w') {
     wKey.style.border = 'none';
   }
 }
-
-let ctrl = false
 
 document.addEventListener('keydown', (e) => {
   let keyPressed = e.key;
@@ -411,8 +408,6 @@ document.addEventListener('keydown', (e) => {
     keyEl.style.scale = .9;
     keyEl.style.background = 'dimgray'
   }
-
-  if (keyPressed == 'Control') ctrl = true;
 });
 document.addEventListener('keyup', (e) => {
   let keyPressed = e.key;
@@ -428,9 +423,7 @@ document.addEventListener('keyup', (e) => {
     keyEl.style.background = 'transparent'
   }
 
-  if (keyPressed == 'Control') ctrl = false;
-
-  if (keyPressed == 'i' && ctrl) {
+  if (keyPressed == 'i' && e.ctrlKey) {
     document.querySelector('.input-container').classList.toggle('hide');
   }
 });

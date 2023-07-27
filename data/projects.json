@@ -173,7 +173,7 @@
 {
   "title": "Speech to Text",
   "tag": "Transcript your words<br> into text",
-  "img": "simple-chat-cover.png",
+  "img": "",
   "screenshot": "speech-to-text-screenshot.png",
   "icon": "fas fa-microphone",
   "description":[
@@ -186,6 +186,29 @@
   },
   {
     "href": "https://ctyamashita.github.io/speech-to-text",
+    "icon": "fas fa-desktop",
+    "title": "Web App"
+  }],
+  "front":["html5", "css3", "javascript"],
+  "others":["visual_studio_code", "git"],
+  "team":["Celso Takeshi Yamashita"]
+},
+{
+  "title": "CSV Editor",
+  "tag": "Vizualize tables<br> from CSV files",
+  "img": "",
+  "screenshot": "csv-editor-screenshot.png",
+  "icon": "fa-solid fa-table",
+  "description":[
+    "Working with serialization and deserialization. You are able to import, vizualize, edit and export CSV files."
+  ],
+  "links":[{
+    "href": "https://github.com/ctyamashita/csv-editor",
+    "icon": "fab fa-github-square",
+    "title": "Github"
+  },
+  {
+    "href": "https://ctyamashita.github.io/csv-editor",
     "icon": "fas fa-desktop",
     "title": "Web App"
   }],
