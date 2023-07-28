@@ -206,7 +206,7 @@ const generateBoard = () => {
   wall.append(wallLeft);
   wall.append(wallRight);
 
-  boardContainer.append(wall);
+  boardContainer.appendChild(wall);
   document.body.append(boardContainer);
   // All tiles
   availableTiles = Array.from(document.querySelectorAll('td'));

@@ -12,11 +12,11 @@ body {
 table {
   display: flex;
   flex-direction: column;
-  background: radial-gradient(beige, wheat);
+  background: radial-gradient(beige, tan);
   transform: scale(.5) scaleY(.5) skew(45deg, -45deg);
   box-shadow: -8vh 8vh 0px 0 rgba(0,0,0,0.4);
   border-radius: 1vh;
-  outline: solid 0.6vw tan;
+  outline: solid 0.6vw peru;
   outline-offset: -0.3vw;
   transition: 3s;
 }
@@ -27,7 +27,7 @@ tr {
 }
 
 td {
-  outline: solid 2px tan;
+  outline: solid 2px peru;
   outline-offset: -1px;
   flex-grow: 1;
 }
@@ -58,7 +58,7 @@ td:has(.place) {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  z-index: -1;
+  /* z-index: -1; */
   margin: 0 auto;
   position: fixed;
   transform: translateY(25%);
@@ -533,6 +533,7 @@ td:has(.carpet) {
 
 .input-container {
   position: fixed;
+  z-index: 1;
   top: 2vw;
   left: 2vw;
   background-color: white;
@@ -851,6 +852,7 @@ div:has(.w-key) {
   background-size: cover;
   transform: skewY(26deg);
   border-radius: 0px 4px 4px 4px;
+  box-shadow: inset -4px 4px 0 0px white;
 }
 
 .wall-left {
@@ -858,6 +860,7 @@ div:has(.w-key) {
   background-size: cover;
   transform: skewY(-26deg);
   border-radius: 4px 0px 4px 4px;
+  box-shadow: inset 4px 4px 0 0px white;
 }
 
 .flat .wall-container {
