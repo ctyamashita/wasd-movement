@@ -79,7 +79,7 @@ td:has(.place) {
   animation-name: idle !important;
   animation-duration: 4s;
   animation-iteration-count: infinite;
-  mix-blend-mode: multiply;
+  opacity: .7;
 }
 
 .board-container.flat {
@@ -234,17 +234,15 @@ td:has(.place) {
 .place.player {
   border-radius: 50%;
   box-shadow: 0 0 4vw 1vw greenyellow;
-  mix-blend-mode: normal;
   outline-color: olivedrab;
   outline: none;
-}
-
-.player.place {
   background: radial-gradient(yellow 20%, yellowgreen 58%, white);
+  opacity: 1;
 }
 
 td:has(.place.player) {
   outline: solid 0 transparent;
+  mix-blend-mode: normal;
 }
 
 .bubble {
@@ -366,7 +364,7 @@ td:has(.disk) {
   left: 37%;
   width: 50%;
   transform: skewX(-26.5deg) scale(1) rotate(90deg);
-  outline: solid 0.2vw aliceblue;
+  outline: solid 0.3vw peru;
   outline-offset: -0.1vw;
   border-radius: 0.1vw;
   transition: 3s;
@@ -381,7 +379,7 @@ td:has(.disk) {
   left: 37%;
   width: 50%;
   transform: skewX(26.5deg) scale(1) rotate(90deg);
-  outline: solid 0.2vw aliceblue;
+  outline: solid 0.3vw peru;
   outline-offset: -0.1vw;
   border-radius: 0.1vw;
   transition: 3s;
@@ -393,7 +391,7 @@ td:has(.disk) {
     top: -99%;
     right: -49%;
     background: white;
-    outline: solid 0.4vw aliceblue;
+    outline: solid 0.5vw peru;
     outline-offset: -0.2vw;
     border-radius: 0.6vw;
     transition: 3s;
