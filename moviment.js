@@ -186,7 +186,7 @@ const generateBoard = () => {
       const container = document.createElement('div');
       const fixedX = 1 + width - x;
       container.setAttribute('class', `coord-${fixedX}-${fixedY}`);
-      tile.style.order = (width + height) - y - x;
+      tile.style.zIndex = y - x + (width);
       tile.append(container);
       row.append(tile);
     }
@@ -352,8 +352,8 @@ document.addEventListener('keyup', (e) => {
     currentPosition.classList.remove('player');
     if (['w', 'ArrowUp'].includes(e.key) && y < height && walkableTile(x, y + 1)) y += 1
     if (['s', 'ArrowDown'].includes(e.key) && y > 1  && walkableTile(x, y - 1)) y -= 1
-    if (['a', 'ArrowLeft'].includes(e.key) && x > 1  && walkableTile(x - 1, y)) x -= 1
-    if (['d', 'ArrowRight'].includes(e.key) && x < width  && walkableTile(x + 1, y)) x += 1
+    if (['d', 'ArrowRight'].includes(e.key) && x > 1  && walkableTile(x - 1, y)) x -= 1
+    if (['a', 'ArrowLeft'].includes(e.key) && x < width  && walkableTile(x + 1, y)) x += 1
     document.querySelector(`.coord-${x}-${y}`).classList.add('player');
   }
 });
