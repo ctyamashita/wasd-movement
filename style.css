@@ -14,9 +14,8 @@ table {
   flex-direction: column;
   background: radial-gradient(beige, tan);
   transform: scale(.5) scaleY(.5) skew(45deg, -45deg);
-  box-shadow: -8vh 8vh 0px 0 rgba(0,0,0,0.4);
+  box-shadow: -4px 4px 0 2px darkslategray, -3px 3px 0 5px darkslategray, -8vw 8vw 0px 0 rgba(0,0,0,0.4), inset -2px 2px 0 0 peru;
   border-radius: 1vh;
-  outline: solid 0.6vw peru;
   outline-offset: -0.3vw;
   transition: 3s;
 }
@@ -27,7 +26,7 @@ tr {
 }
 
 td {
-  outline: solid 2px peru;
+  outline: solid 2px #cd853f2b;
   outline-offset: -1px;
   flex-grow: 1;
 }
@@ -359,34 +358,27 @@ td:has(.disk) {
   transition: 3s;
 }
 
-.l-wall {
+.l-wall, .r-wall {
   position: relative;
   flex-grow: 1;
-  background: aliceblue;
   background-size: contain !important;
   background-repeat: no-repeat !important;
-  left: 37%;
-  width: 50%;
-  transform: skewX(-26.5deg) scale(1) rotate(90deg);
   outline: solid 0.2vw aliceblue;
   outline-offset: -0.1vw;
   border-radius: 0.1vw;
   transition: 3s;
+  left: 37%;
+  width: 50%;
+}
+
+.l-wall {
+  background: aliceblue;
+  transform: skewX(-26.5deg) scale(1) rotate(90deg);
 }
 
 .r-wall {
-  position: relative;
-  flex-grow: 1;
   background: rgb(211, 232, 237);
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  left: 37%;
-  width: 50%;
   transform: skewX(26.5deg) scale(1) rotate(90deg);
-  outline: solid 0.2vw aliceblue;
-  outline-offset: -0.1vw;
-  border-radius: 0.1vw;
-  transition: 3s;
 }
 
 .ceiling-box {
@@ -706,7 +698,7 @@ input[type=number]::-webkit-inner-spin-button {
   }
 
   table {
-    box-shadow: -8vw 8vw 0px 0 rgba(0,0,0,0.4);
+    box-shadow: -4px 4px 0 2px darkslategray, -3px 3px 0 5px darkslategray, -8vw 8vw 0px 0 rgba(0,0,0,0.4), inset -2px 2px 0 0 peru
   }
 
   .modal-body {
@@ -734,7 +726,12 @@ input[type=number]::-webkit-inner-spin-button {
     margin: 0 0 0 32px !important;
     padding-right: 24px;
   }
+}
 
+@media (max-width: 480px) {
+  .wall-container {
+    transform: scale(1.003) !important;
+  }
 }
 
 @media (min-width: 480px) {
@@ -837,12 +834,13 @@ div:has(.w-key) {
   z-index: -1;
   position: absolute;
   display: flex;
-  top: -12.5%;
+  top: -11.75%;
   height: 50%;
   width: 100%;
   transition: transform 2s, opacity 4s;
   transition-property: transform;
   transition-delay: 1s;
+  transform: scale(1.005);
 }
 
 .wall-left, .wall-right {
@@ -853,16 +851,16 @@ div:has(.w-key) {
   background: url(images/bg-01.png), linear-gradient(180deg, deepskyblue 0%, transparent 70%);
   background-size: cover;
   transform: skewY(26deg);
-  border-radius: 0px 4px 4px 4px;
-  box-shadow: inset -4px 4px 0 0px white;
+  border-radius: 1px 4px 4px 4px;
+  box-shadow: inset -4px 4px 0 0px darkslategray;
 }
 
 .wall-left {
   background: url(images/bg-02.png), linear-gradient(180deg, deepskyblue 0%, transparent 70%);
   background-size: cover;
   transform: skewY(-26deg);
-  border-radius: 4px 0px 4px 4px;
-  box-shadow: inset 4px 4px 0 0px white;
+  border-radius: 4px 1px 4px 4px;
+  box-shadow: inset 4px 4px 0 0px darkslategray;
 }
 
 .flat .wall-container {
