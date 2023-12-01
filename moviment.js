@@ -430,6 +430,7 @@ document.addEventListener('keyup', (e) => {
 });
 
 keysContainer.addEventListener('click', (e) => {
+  console.log(e.target)
   const currentPosition = document.querySelector('.player');
   let [x, y] = currentPosition.classList[0].split('-').slice(1).map(num => Number(num));
   const height = obj['height'];
@@ -437,10 +438,10 @@ keysContainer.addEventListener('click', (e) => {
 
   if (x >= 1 && x <= width && y >= 1 && y <= height && document.activeElement.tagName != "INPUT") {
     currentPosition.classList.remove('player');
-    if (e.target.classList.contain('w') && y < height && walkableTile(x, y + 1)) y += 1
-    if (e.target.classList.contain('s') && y > 1  && walkableTile(x, y - 1)) y -= 1
-    if (e.target.classList.contain('d') && x > 1  && walkableTile(x - 1, y)) x -= 1
-    if (e.target.classList.contain('a') && x < width  && walkableTile(x + 1, y)) x += 1
+    if (e.target.innerText == 'W' && y < height && walkableTile(x, y + 1)) y += 1
+    if (e.target.innerText == 'S' && y > 1  && walkableTile(x, y - 1)) y -= 1
+    if (e.target.innerText == 'D' && x > 1  && walkableTile(x - 1, y)) x -= 1
+    if (e.target.innerText == 'A' && x < width  && walkableTile(x + 1, y)) x += 1
     document.querySelector(`.coord-${x}-${y}`).classList.add('player');
   }
 })

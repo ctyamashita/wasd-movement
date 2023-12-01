@@ -815,6 +815,13 @@ input[type=number]::-webkit-inner-spin-button {
   opacity: .7;
   transition: .3s;
   color: white;
+  cursor: pointer;
+}
+
+.w-key:active, .a-key:active, .s-key:active, .d-key:active {
+  opacity: 1;
+  scale: .9;
+  background: dimgray;
 }
 
 div:has(.w-key) {
