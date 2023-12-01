@@ -15,7 +15,7 @@ table {
   background: radial-gradient(beige, tan);
   transform: scale(.5) scaleY(.5) skew(45deg, -45deg);
   box-shadow: -4px 4px 0 2px darkslategray, -3px 3px 0 5px darkslategray, -8vw 8vw 0px 0 rgba(0,0,0,0.4), inset -2px 2px 0 0 peru;
-  border-radius: 1vh;
+  border-radius: 1.5%;
   outline-offset: -0.3vw;
   transition: 3s;
 }
@@ -420,6 +420,7 @@ td:has(.carpet) {
   background: palegreen;
   transform: translate(5%,-5%) scale(0.90);
   transition: 3s;
+  border-radius: 10%;
 }
 
 .carpet-base {
@@ -427,8 +428,9 @@ td:has(.carpet) {
   top: 0;
   position: absolute;
   transform: revert;
-  background: linear-gradient(-45deg, mediumseagreen 50%, lightgreen 50%);
+  background: linear-gradient(-45deg, mediumseagreen 45%, lightgreen 50%);
   transition: 3s;
+  border-radius: 10%;
 }
 
 .flat .carpet {
@@ -730,7 +732,7 @@ input[type=number]::-webkit-inner-spin-button {
 
 @media (max-width: 480px) {
   .wall-container {
-    transform: scale(1.003) !important;
+    transform: scale(1.015) !important;
   }
 }
 
