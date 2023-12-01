@@ -13,7 +13,7 @@ table {
   display: flex;
   flex-direction: column;
   background: radial-gradient(beige, tan);
-  transform: scale(.5) scaleY(.5) skew(45deg, -45deg);
+  transform: scale(.497) scaleY(.5) skew(45deg, -45deg);
   box-shadow: -4px 4px 0 2px darkslategray, -3px 3px 0 5px darkslategray, -8vw 8vw 0px 0 rgba(0,0,0,0.4), inset -2px 2px 0 0 peru;
   border-radius: 1.5%;
   outline-offset: -0.3vw;
@@ -90,7 +90,7 @@ td:has(.place) {
   transform: scale(.8) scaleY(1) skew(0deg);
   scale: .8;
   transition: 3s;
-  box-shadow: 0 0 0 0 rgba(0,0,0,0.4);
+  box-shadow: 0 0 0 0 rgba(0,0,0,0.4), 0 0 0 3px darkslategray;
   transition: 3s;
 }
 
@@ -566,6 +566,7 @@ td:has(.carpet) {
   background: cadetblue;
   opacity: .6;
   transition: transform 3s, opacity 6s, background 6s;
+  border-radius: inherit;
 }
 
 .flat .hole > div {
@@ -577,7 +578,8 @@ td:has(.carpet) {
 
 .hole {
   overflow: hidden;
-  background: linear-gradient(135deg,burlywood 50%, beige 50%);
+  background: linear-gradient(135deg,burlywood 45%, beige 50%);
+  border-radius: 10%;
 }
 
 input[type=number]::-webkit-inner-spin-button {
@@ -732,7 +734,11 @@ input[type=number]::-webkit-inner-spin-button {
 
 @media (max-width: 480px) {
   .wall-container {
-    transform: scale(1.015) !important;
+    top: -11%;
+  }
+
+  table {
+    transform: scale(.49) scaleY(.5) skew(45deg, -45deg);
   }
 }
 
@@ -843,13 +849,13 @@ div:has(.w-key) {
   z-index: -1;
   position: absolute;
   display: flex;
-  top: -11.75%;
+  top: -11.5%;
   height: 50%;
   width: 100%;
   transition: transform 2s, opacity 4s;
   transition-property: transform;
   transition-delay: 1s;
-  transform: scale(1.005);
+  /* transform: scale(1.005); */
 }
 
 .wall-left, .wall-right {
