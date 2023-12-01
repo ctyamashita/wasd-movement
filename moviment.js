@@ -409,6 +409,7 @@ document.addEventListener('keydown', (e) => {
     keyEl.style.background = 'dimgray'
   }
 });
+
 document.addEventListener('keyup', (e) => {
   let keyPressed = e.key;
   if ('ArrowUp' == e.key) keyPressed = 'w';
@@ -427,3 +428,19 @@ document.addEventListener('keyup', (e) => {
     document.querySelector('.input-container').classList.toggle('hide');
   }
 });
+
+keysContainer.addEventListener('click', (e) => {
+  const currentPosition = document.querySelector('.player');
+  let [x, y] = currentPosition.classList[0].split('-').slice(1).map(num => Number(num));
+  const height = obj['height'];
+  const width = obj['width'] || obj['height'];
+
+  if (x >= 1 && x <= width && y >= 1 && y <= height && document.activeElement.tagName != "INPUT") {
+    currentPosition.classList.remove('player');
+    if (e.target.classList.contain('w') && y < height && walkableTile(x, y + 1)) y += 1
+    if (e.target.classList.contain('s') && y > 1  && walkableTile(x, y - 1)) y -= 1
+    if (e.target.classList.contain('d') && x > 1  && walkableTile(x - 1, y)) x -= 1
+    if (e.target.classList.contain('a') && x < width  && walkableTile(x + 1, y)) x += 1
+    document.querySelector(`.coord-${x}-${y}`).classList.add('player');
+  }
+})

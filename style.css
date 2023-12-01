@@ -275,12 +275,16 @@ td:has(.place.player) {
   /* padding: 12px; */
 }
 
+.modal-body {
+  flex-grow: 1;
+}
+
 .modal.expand {
   display: flex;
   justify-content: center;
   position: absolute;
   width: 90vw;
-  height: auto;
+  height: 95vh;
   animation: show .3s;
   transition:.3s;
 }
@@ -364,7 +368,7 @@ td:has(.disk) {
   left: 37%;
   width: 50%;
   transform: skewX(-26.5deg) scale(1) rotate(90deg);
-  outline: solid 0.3vw peru;
+  outline: solid 0.2vw aliceblue;
   outline-offset: -0.1vw;
   border-radius: 0.1vw;
   transition: 3s;
@@ -379,7 +383,7 @@ td:has(.disk) {
   left: 37%;
   width: 50%;
   transform: skewX(26.5deg) scale(1) rotate(90deg);
-  outline: solid 0.3vw peru;
+  outline: solid 0.2vw aliceblue;
   outline-offset: -0.1vw;
   border-radius: 0.1vw;
   transition: 3s;
@@ -391,7 +395,7 @@ td:has(.disk) {
     top: -99%;
     right: -49%;
     background: white;
-    outline: solid 0.5vw peru;
+    outline: solid 0.3vw aliceblue;
     outline-offset: -0.2vw;
     border-radius: 0.6vw;
     transition: 3s;
