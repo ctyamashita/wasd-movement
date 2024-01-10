@@ -17,7 +17,7 @@ body {
 table {
   display: flex;
   flex-direction: column;
-  background: radial-gradient(beige, tan);
+  background: linear-gradient(-135deg, tan 15%, beige);
   transform: scale(.497) scaleY(.5) skew(45deg, -45deg);
   box-shadow: -4px 4px 0 2px darkslategray, -3px 3px 0 5px darkslategray, -8vw 8vw 0px 0 rgba(0,0,0,0.4), inset -2px 2px 0 0 peru;
   border-radius: 1.5%;
@@ -334,7 +334,6 @@ body:not(:has(.flat)) td:has(:focus) .bubble {
 .flat td:has(:hover) .bubble,
 .flat td:has(:focus) .bubble {
   animation: flat-bubble-idle 3s infinite !important;
-  animation-delay: 3s;
 }
 
 .disk {
@@ -875,7 +874,7 @@ div:has(.w-key) {
 }
 
 .wall-right {
-  background: url(images/bg-01.png), linear-gradient(180deg, deepskyblue 0%, transparent 70%);
+  background: url(images/bg-01.png), linear-gradient(180deg, deepskyblue 0%, steelblue 70%);
   background-size: cover;
   transform: skewY(26deg);
   border-radius: 1px 4px 6px 4px;
@@ -883,7 +882,7 @@ div:has(.w-key) {
 }
 
 .wall-left {
-  background: url(images/bg-02.png), linear-gradient(180deg, deepskyblue 0%, transparent 70%);
+  background: url(images/bg-02.png), linear-gradient(135deg, deepskyblue 0%, steelblue 70%);
   background-size: cover;
   transform: skewY(-26deg);
   border-radius: 4px 1px 4px 6px;

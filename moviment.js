@@ -342,13 +342,14 @@ document.addEventListener('keyup', (e) => {
     // click if enter or space
     if (e.key == 'Enter' || e.code == 'Enter' || e.key == ' ' || e.code == 'Space' ) {
       currentPosition.nextElementSibling.click();
-    } else if (['w', 'ArrowUp','s', 'ArrowDown','a', 'ArrowLeft','d', 'ArrowRight', 'Escape'].includes(e.key)) {
-      document.querySelectorAll(`.modal`).forEach(modal => modal.classList.remove('expand'));
     }
   }
 
+  // check for active modal
+  const modalNotOpened = !document.querySelector('.modal.expand')
+
   // check if it's allowed to move to coord
-  if (x >= 1 && x <= width && y >= 1 && y <= height && document.activeElement.tagName != "INPUT") {
+  if (x >= 1 && x <= width && y >= 1 && y <= height && document.activeElement.tagName != "INPUT" && modalNotOpened) {
     currentPosition.classList.remove('player');
     if (['w', 'ArrowUp'].includes(e.key) && y < height && walkableTile(x, y + 1)) y += 1
     if (['s', 'ArrowDown'].includes(e.key) && y > 1  && walkableTile(x, y - 1)) y -= 1
