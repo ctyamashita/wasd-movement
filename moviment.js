@@ -145,7 +145,7 @@ modeBtn.onclick = () => {
       place.style.opacity = 1;
       place.nextElementSibling.style.opacity = 1;
     });
-  }, 2700);
+  }, 2850);
 };
 modeBtnTop.classList.add('box-top-btn');
 modeBtnRight.classList.add('box-right-btn');
@@ -269,8 +269,8 @@ const addToBoard = (thing) => {
       wallLeft.style.background = `url(images/img-${wallImages.sample()}.png) aliceblue`;
     } else if (rand(100) > 70) {
       wallRight.style.background = `url(images/img-${wallImages.sample()}.png) powderblue`;
-    } else if (rand(100) > 70) {
-      boxCeiling.innerText = wallText.sample();
+    } else if (rand(100) > 50) {
+      boxCeiling.innerHTML = `<p>${wallText.sample()}</p>`;
     }
     boxCeiling.classList.add('ceiling-box');
     objEl.parentElement.append(boxCeiling);
