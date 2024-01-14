@@ -743,7 +743,6 @@ input[type=number]::-webkit-inner-spin-button {
 
   .description  {
     height: 100%;
-    max-width: 420px;
     overflow-y: scroll;
     margin: 0 0 0 32px !important;
     padding-right: 24px;
